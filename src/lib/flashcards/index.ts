@@ -1,0 +1,43 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { CreateFlashcardDto, Flashcard, UpdateFlashcardDto } from "./types";
+
+const TABLE = "flashcards" as const;
+
+export async function listFlashcards(supabase: SupabaseClient): Promise<Flashcard[]> {
+  const { data, error } = await supabase
+    .from(TABLE)
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data;
+}
+
+export async function getFlashcard(supabase: SupabaseClient, id: string): Promise<Flashcard> {
+  const { data, error } = await supabase.from(TABLE).select("*").eq("id", id).single();
+  if (error) throw error;
+  return data;
+}
+
+export async function createFlashcard(
+  supabase: SupabaseClient,
+  dto: CreateFlashcardDto,
+): Promise<Flashcard> {
+  const { data, error } = await supabase.from(TABLE).insert(dto).select().single();
+  if (error) throw error;
+  return data;
+}
+
+export async function updateFlashcard(
+  supabase: SupabaseClient,
+  id: string,
+  dto: UpdateFlashcardDto,
+): Promise<Flashcard> {
+  const { data, error } = await supabase.from(TABLE).update(dto).eq("id", id).select().single();
+  if (error) throw error;
+  return data;
+}
+
+export async function deleteFlashcard(supabase: SupabaseClient, id: string): Promise<void> {
+  const { error } = await supabase.from(TABLE).delete().eq("id", id);
+  if (error) throw error;
+}
