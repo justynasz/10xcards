@@ -125,8 +125,8 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 ## Open Roadmap Questions
 
-1. **Jaki jest akceptowalny czas oczekiwania na generację AI?** NFR wymaga, żeby generacja nie skłoniła użytkownika do porzucenia sesji — bez konkretnej liczby ms nie da się zaprojektować UX (loading state, timeout, streaming vs waiting całości). Owner: user/team. Block: S-01.
-2. **Jak zostanie zwalidowana jakość generacji AI przed pierwszym wdrożeniem?** Socrates na FR-003 flaguje niską jakość jako primary failure mode całego produktu; metryka 75% acceptance rate z PRD §Success Criteria wymaga wcześniejszego pomiaru na próbkach. Uzgodnij protokół (próbne teksty, kto ocenia, ile iteracji promptu) przed `/10x-plan ai-generate-and-review`. Owner: user. Block: S-01.
+1. ~~**Jaki jest akceptowalny czas oczekiwania na generację AI?**~~ **RESOLVED 2026-06-16:** max 10s; powyżej loading state + anulowanie. Streaming preferowany (karty pojawiają się jedna po drugiej). Timeout = 10s z komunikatem błędu. Block: lifted.
+2. ~~**Jak zostanie zwalidowana jakość generacji AI przed pierwszym wdrożeniem?**~~ **RESOLVED 2026-06-16:** ręczna ocena na 5 próbkach tekstów przed mergem S-01; właściciel: user. Kryterium: acceptance rate zbliżony do 75% z PRD §Success Criteria. Block: lifted.
 3. **Które dostawcy OAuth będą wspierani?** PRD wymienia OAuth jako opcję auth obok email+password, ale nie podaje nazw providerów. Downstream implementation decision. Owner: team. Block: no.
 
 ## Parked
