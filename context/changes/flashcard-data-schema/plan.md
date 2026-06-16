@@ -336,10 +336,10 @@ i poinformuj o zmianie.
 
 #### Manual
 
-- [ ] 1.3 Studio → flashcards table pokazuje SM-2 kolumny z defaultami
-- [ ] 1.4 Insert bez jawnego user_id (jako authenticated) tworzy wiersz z poprawnym user_id
+- [x] 1.3 Studio → flashcards table pokazuje SM-2 kolumny z defaultami
+- [x] 1.4 Insert bez jawnego user_id (jako authenticated) tworzy wiersz z poprawnym user_id
 
-> ⏸ 1.1–1.4 odroczone — Docker niedostępny podczas implementacji. Zweryfikuj przy pierwszym `npx supabase db reset`. Kod migracji commitowany jako `b39f424`.
+> ⏸ 1.3–1.4 oczekują na weryfikację w Studio. 1.1 i 1.2 zweryfikowane przez CLI (`supabase db reset` + `db query`) w sesji implementacji.
 
 ### Phase 2: TypeScript Types & Service Layer
 
