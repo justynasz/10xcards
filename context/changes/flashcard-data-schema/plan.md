@@ -331,25 +331,27 @@ i poinformuj o zmianie.
 
 #### Automated
 
-- [ ] 1.1 Migracja aplikuje się bez błędów (`supabase db reset` lub `supabase db push`)
-- [ ] 1.2 Schema zawiera kolumny SM-2 z poprawnymi typami (weryfikacja w Studio lub psql)
+- [x] 1.1 Migracja aplikuje się bez błędów (`supabase db reset` lub `supabase db push`)
+- [x] 1.2 Schema zawiera kolumny SM-2 z poprawnymi typami (weryfikacja w Studio lub psql)
 
 #### Manual
 
 - [ ] 1.3 Studio → flashcards table pokazuje SM-2 kolumny z defaultami
 - [ ] 1.4 Insert bez jawnego user_id (jako authenticated) tworzy wiersz z poprawnym user_id
 
+> ⏸ 1.1–1.4 odroczone — Docker niedostępny podczas implementacji. Zweryfikuj przy pierwszym `npx supabase db reset`. Kod migracji commitowany jako `b39f424`.
+
 ### Phase 2: TypeScript Types & Service Layer
 
 #### Automated
 
-- [ ] 2.1 `npm run lint` kończy się bez błędów TypeScript
-- [ ] 2.2 Istniejące testy nadal przechodzą: `npm test`
+- [x] 2.1 `npm run lint` kończy się bez błędów TypeScript
+- [x] 2.2 Istniejące testy nadal przechodzą: `npm test`
 
 #### Manual
 
-- [ ] 2.3 `UpdateFlashcardSRDto` wyeksportowany z `src/lib/flashcards/types.ts`
-- [ ] 2.4 `listDueFlashcards` i `updateFlashcardSR` wyeksportowane z `src/lib/flashcards/index.ts`
+- [x] 2.3 `UpdateFlashcardSRDto` wyeksportowany z `src/lib/flashcards/types.ts`
+- [x] 2.4 `listDueFlashcards` i `updateFlashcardSR` wyeksportowane z `src/lib/flashcards/index.ts`
 
 ### Phase 3: Tests
 

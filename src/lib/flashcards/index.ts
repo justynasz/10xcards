@@ -1,5 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { CreateFlashcardDto, Flashcard, UpdateFlashcardDto } from "./types";
+import type { CreateFlashcardDto, Flashcard, UpdateFlashcardDto, UpdateFlashcardSRDto } from "./types";
 
 const TABLE = "flashcards" as const;
 
@@ -34,4 +34,24 @@ export async function updateFlashcard(
 export async function deleteFlashcard(supabase: SupabaseClient, id: string): Promise<void> {
   const { error } = await supabase.from(TABLE).delete().eq("id", id);
   if (error) throw error;
+}
+
+export async function listDueFlashcards(supabase: SupabaseClient): Promise<Flashcard[]> {
+  const { data, error } = await supabase
+    .from(TABLE)
+    .select("*")
+    .lte("due_date", new Date().toISOString())
+    .order("due_date", { ascending: true });
+  if (error) throw error;
+  return data as Flashcard[];
+}
+
+export async function updateFlashcardSR(
+  supabase: SupabaseClient,
+  id: string,
+  dto: UpdateFlashcardSRDto,
+): Promise<Flashcard> {
+  const result = await supabase.from(TABLE).update(dto).eq("id", id).select().single();
+  if (result.error) throw result.error;
+  return result.data as Flashcard;
 }
