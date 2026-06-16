@@ -3,7 +3,7 @@ project: "10xCards"
 version: 1
 status: draft
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-06-16
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -33,7 +33,7 @@ S-01 to pierwsze wrota: udowadnia, że AI generuje użyteczne karty (riskiest as
 
 | ID   | Change ID               | Outcome (user can …)                                                                                     | Prerequisites | PRD refs                               | Status   |
 |------|-------------------------|----------------------------------------------------------------------------------------------------------|---------------|----------------------------------------|----------|
-| F-01 | flashcard-data-schema   | (foundation) Tabela `flashcards` w Supabase z RLS; izolacja danych per user                             | —             | NFR (data isolation)                   | ready    |
+| F-01 | flashcard-data-schema   | (foundation) Tabela `flashcards` w Supabase z RLS; izolacja danych per user                             | —             | NFR (data isolation)                   | done     |
 | S-01 | ai-generate-and-review  | wkleić tekst, otrzymać karty AI, zaakceptować/edytować/odrzucić każdą, zapisać zaakceptowane do decku   | F-01          | FR-001, FR-003, FR-004, US-01          | blocked  |
 | S-02 | sr-review-session       | rozpocząć sesję powtarzania SR i ocenić recall każdej karty; app planuje kolejne powtórki automatycznie | S-01          | FR-009, FR-010                         | proposed |
 | S-03 | manual-card-management  | tworzyć kartę ręcznie, przeglądać, edytować i usuwać karty ze swojego decku                             | F-01          | FR-002, FR-005, FR-006, FR-007, FR-008 | proposed |
@@ -72,7 +72,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Pierwsza do zrobienia — każdy inny slice jest od tego zablokowany. Błąd w schemacie RLS = naruszenie izolacji danych (guardrail PRD: "Losing a deck would destroy trust immediately"). Migracja Supabase musi być backward-compatible od pierwszego commitu.
-- **Status:** ready
+- **Status:** done
 
 ## Slices
 
@@ -140,4 +140,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 ## Done
 
-(Empty on first generation. `/10x-archive` appends an entry here — and flips that item's `Status` to `done` — when a change whose `Change ID` matches the item is archived.)
+- **F-01: (foundation) Tabela `flashcards` w Supabase z RLS; izolacja danych per user** — Archived 2026-06-16 → `context/archive/2026-05-27-flashcard-data-schema/`. Lesson: —.
