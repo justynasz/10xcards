@@ -401,25 +401,25 @@ Brak migracji bazy danych — tabela `flashcards` z wszystkimi potrzebnymi polam
 
 #### Automated
 
-- [x] 1.1 `npm run lint` przechodzi bez błędów TypeScript
-- [x] 1.2 `npm test` przechodzi (istniejące testy niezmienione)
+- [x] 1.1 `npm run lint` przechodzi bez błędów TypeScript — c606557
+- [x] 1.2 `npm test` przechodzi (istniejące testy niezmienione) — c606557
 
 #### Manual
 
-- [x] 1.3 Brak `OPENROUTER_API_KEY` → baner "OpenRouter nie jest skonfigurowany" widoczny w layoucie
-- [x] 1.4 Wejście na `/generate` bez logowania → redirect na `/auth/signin`
+- [x] 1.3 Brak `OPENROUTER_API_KEY` → baner "OpenRouter nie jest skonfigurowany" widoczny w layoucie — c606557
+- [x] 1.4 Wejście na `/generate` bez logowania → redirect na `/auth/signin` — c606557
 
 ### Phase 2: OpenRouter Service Layer
 
 #### Automated
 
-- [ ] 2.1 `npm run lint` przechodzi bez błędów TypeScript
-- [ ] 2.2 `npm test` — ≥ 3 nowe testy `openrouter/__tests__/` przechodzą
+- [x] 2.1 `npm run lint` przechodzi bez błędów TypeScript
+- [x] 2.2 `npm test` — ≥ 3 nowe testy `openrouter/__tests__/` przechodzą
 
 #### Manual
 
-- [ ] 2.3 `src/lib/openrouter/index.ts` eksportuje `generateFlashcards`
-- [ ] 2.4 `src/lib/openrouter/types.ts` eksportuje `GeneratedCard` i `GenerateFlashcardsInput`
+- [x] 2.3 `src/lib/openrouter/index.ts` eksportuje `generateFlashcards`
+- [x] 2.4 `src/lib/openrouter/types.ts` eksportuje `GeneratedCard` i `GenerateFlashcardsInput`
 
 ### Phase 3: API Routes & Batch Create
 
