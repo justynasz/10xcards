@@ -331,13 +331,13 @@ i poinformuj o zmianie.
 
 #### Automated
 
-- [x] 1.1 Migracja aplikuje się bez błędów (`supabase db reset` lub `supabase db push`)
-- [x] 1.2 Schema zawiera kolumny SM-2 z poprawnymi typami (weryfikacja w Studio lub psql)
+- [x] 1.1 Migracja aplikuje się bez błędów (`supabase db reset` lub `supabase db push`) — b39f424
+- [x] 1.2 Schema zawiera kolumny SM-2 z poprawnymi typami (weryfikacja w Studio lub psql) — b39f424
 
 #### Manual
 
-- [x] 1.3 Studio → flashcards table pokazuje SM-2 kolumny z defaultami
-- [x] 1.4 Insert bez jawnego user_id (jako authenticated) tworzy wiersz z poprawnym user_id
+- [x] 1.3 Studio → flashcards table pokazuje SM-2 kolumny z defaultami — b39f424
+- [x] 1.4 Insert bez jawnego user_id (jako authenticated) tworzy wiersz z poprawnym user_id — b39f424
 
 > ⏸ 1.3–1.4 oczekują na weryfikację w Studio. 1.1 i 1.2 zweryfikowane przez CLI (`supabase db reset` + `db query`) w sesji implementacji.
 
