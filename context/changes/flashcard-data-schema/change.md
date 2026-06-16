@@ -2,9 +2,9 @@
 change_id: flashcard-data-schema
 roadmap_id: F-01
 title: "Flashcard data schema + SM-2 fields"
-status: implementing
+status: implemented
 created: 2026-05-27
-updated: 2026-06-15
+updated: 2026-06-17
 prd_refs:
   - "NFR (data isolation)"
   - FR-001

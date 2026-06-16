@@ -357,9 +357,9 @@ i poinformuj o zmianie.
 
 #### Automated
 
-- [x] 3.1 Wszystkie testy przechodzą: `npm test` (≥ 8 passing)
-- [x] 3.2 `npm run lint` bez błędów w pliku testowym
+- [x] 3.1 Wszystkie testy przechodzą: `npm test` (≥ 8 passing) — aef3d81
+- [x] 3.2 `npm run lint` bez błędów w pliku testowym — aef3d81
 
 #### Manual
 
-- [x] 3.3 `listDueFlashcards` i `updateFlashcardSR` mają ≥ 2 testy każda
+- [x] 3.3 `listDueFlashcards` i `updateFlashcardSR` mają ≥ 2 testy każda — aef3d81
