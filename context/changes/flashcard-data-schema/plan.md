@@ -345,21 +345,21 @@ i poinformuj o zmianie.
 
 #### Automated
 
-- [x] 2.1 `npm run lint` kończy się bez błędów TypeScript
-- [x] 2.2 Istniejące testy nadal przechodzą: `npm test`
+- [x] 2.1 `npm run lint` kończy się bez błędów TypeScript — 2d33799
+- [x] 2.2 Istniejące testy nadal przechodzą: `npm test` — 2d33799
 
 #### Manual
 
-- [x] 2.3 `UpdateFlashcardSRDto` wyeksportowany z `src/lib/flashcards/types.ts`
-- [x] 2.4 `listDueFlashcards` i `updateFlashcardSR` wyeksportowane z `src/lib/flashcards/index.ts`
+- [x] 2.3 `UpdateFlashcardSRDto` wyeksportowany z `src/lib/flashcards/types.ts` — 2d33799
+- [x] 2.4 `listDueFlashcards` i `updateFlashcardSR` wyeksportowane z `src/lib/flashcards/index.ts` — 2d33799
 
 ### Phase 3: Tests
 
 #### Automated
 
-- [ ] 3.1 Wszystkie testy przechodzą: `npm test` (≥ 8 passing)
-- [ ] 3.2 `npm run lint` bez błędów w pliku testowym
+- [x] 3.1 Wszystkie testy przechodzą: `npm test` (≥ 8 passing)
+- [x] 3.2 `npm run lint` bez błędów w pliku testowym
 
 #### Manual
 
-- [ ] 3.3 `listDueFlashcards` i `updateFlashcardSR` mają ≥ 2 testy każda
+- [x] 3.3 `listDueFlashcards` i `updateFlashcardSR` mają ≥ 2 testy każda
