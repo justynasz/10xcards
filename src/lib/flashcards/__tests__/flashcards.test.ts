@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import {
+  batchCreateFlashcards,
   createFlashcard,
   deleteFlashcard,
   listDueFlashcards,
@@ -135,5 +136,34 @@ describe("updateFlashcardSR", () => {
     };
     const supabase = makeSupabase({ data: null, error: new Error("db error") });
     await expect(updateFlashcardSR(supabase as never, "card-1", dto)).rejects.toThrow("db error");
+  });
+});
+
+const makeSupabaseBatch = (result: { data: unknown; error: unknown }) => ({
+  from: vi.fn().mockReturnThis(),
+  insert: vi.fn().mockReturnThis(),
+  select: vi.fn().mockResolvedValue(result),
+});
+
+describe("batchCreateFlashcards", () => {
+  it("inserts multiple cards and returns them", async () => {
+    const cards = [makeCard(), makeCard({ id: "card-2", front: "Q2?", back: "A2." })];
+    const supabase = makeSupabaseBatch({ data: cards, error: null });
+
+    const result = await batchCreateFlashcards(supabase as never, [
+      { front: cards[0].front, back: cards[0].back },
+      { front: cards[1].front, back: cards[1].back },
+    ]);
+
+    expect(supabase.insert).toHaveBeenCalledWith([
+      { front: cards[0].front, back: cards[0].back },
+      { front: cards[1].front, back: cards[1].back },
+    ]);
+    expect(result).toEqual(cards);
+  });
+
+  it("throws on supabase error", async () => {
+    const supabase = makeSupabaseBatch({ data: null, error: new Error("db error") });
+    await expect(batchCreateFlashcards(supabase as never, [{ front: "Q", back: "A" }])).rejects.toThrow("db error");
   });
 });

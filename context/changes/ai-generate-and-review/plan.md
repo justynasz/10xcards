@@ -413,26 +413,26 @@ Brak migracji bazy danych — tabela `flashcards` z wszystkimi potrzebnymi polam
 
 #### Automated
 
-- [x] 2.1 `npm run lint` przechodzi bez błędów TypeScript
-- [x] 2.2 `npm test` — ≥ 3 nowe testy `openrouter/__tests__/` przechodzą
+- [x] 2.1 `npm run lint` przechodzi bez błędów TypeScript — e3aa09c
+- [x] 2.2 `npm test` — ≥ 3 nowe testy `openrouter/__tests__/` przechodzą — e3aa09c
 
 #### Manual
 
-- [x] 2.3 `src/lib/openrouter/index.ts` eksportuje `generateFlashcards`
-- [x] 2.4 `src/lib/openrouter/types.ts` eksportuje `GeneratedCard` i `GenerateFlashcardsInput`
+- [x] 2.3 `src/lib/openrouter/index.ts` eksportuje `generateFlashcards` — e3aa09c
+- [x] 2.4 `src/lib/openrouter/types.ts` eksportuje `GeneratedCard` i `GenerateFlashcardsInput` — e3aa09c
 
 ### Phase 3: API Routes & Batch Create
 
 #### Automated
 
-- [ ] 3.1 `npm run lint` przechodzi bez błędów TypeScript
-- [ ] 3.2 `npm test` — nowe testy `batchCreateFlashcards` przechodzą
+- [x] 3.1 `npm run lint` przechodzi bez błędów TypeScript
+- [x] 3.2 `npm test` — nowe testy `batchCreateFlashcards` przechodzą
 
 #### Manual
 
-- [ ] 3.3 `POST /api/flashcards/generate` bez auth → 401
-- [ ] 3.4 `POST /api/flashcards/batch-create` bez auth → 401
-- [ ] 3.5 `src/lib/flashcards/index.ts` eksportuje `batchCreateFlashcards`
+- [x] 3.3 `POST /api/flashcards/generate` bez auth → 401
+- [x] 3.4 `POST /api/flashcards/batch-create` bez auth → 401
+- [x] 3.5 `src/lib/flashcards/index.ts` eksportuje `batchCreateFlashcards`
 
 ### Phase 4: UI — Generate Page
 

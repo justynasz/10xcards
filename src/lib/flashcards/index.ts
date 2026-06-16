@@ -46,6 +46,15 @@ export async function listDueFlashcards(supabase: SupabaseClient): Promise<Flash
   return data as Flashcard[];
 }
 
+export async function batchCreateFlashcards(
+  supabase: SupabaseClient,
+  dtos: CreateFlashcardDto[],
+): Promise<Flashcard[]> {
+  const { data, error } = await supabase.from(TABLE).insert(dtos).select();
+  if (error) throw error;
+  return data as Flashcard[];
+}
+
 export async function updateFlashcardSR(
   supabase: SupabaseClient,
   id: string,
