@@ -32,10 +32,12 @@ export const POST: APIRoute = async (context) => {
     const cards = await generateFlashcards({ text: parsed.data.text, apiKey: OPENROUTER_API_KEY });
     return Response.json({ cards }, { status: 200 });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown error";
+    // eslint-disable-next-line no-console
+    console.error("[generate] OpenRouter error:", err);
+    const message = err instanceof Error ? err.message : "";
     if (message.includes("timed out")) {
-      return Response.json({ error: "Generation timed out" }, { status: 504 });
+      return Response.json({ error: "Generation timed out. Please try again." }, { status: 504 });
     }
-    return Response.json({ error: message }, { status: 500 });
+    return Response.json({ error: "Generation failed. Please try again." }, { status: 500 });
   }
 };

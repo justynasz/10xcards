@@ -36,7 +36,8 @@ export const POST: APIRoute = async (context) => {
     const savedCards = await batchCreateFlashcards(supabase, parsed.data.cards);
     return Response.json({ count: savedCards.length, cards: savedCards }, { status: 201 });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    return Response.json({ error: message }, { status: 500 });
+    // eslint-disable-next-line no-console
+    console.error("[batch-create] Supabase error:", err);
+    return Response.json({ error: "Failed to save cards. Please try again." }, { status: 500 });
   }
 };

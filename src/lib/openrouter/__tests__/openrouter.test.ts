@@ -7,12 +7,13 @@ const validInput: GenerateFlashcardsInput = {
   apiKey: "test-key",
 };
 
-function makeResponse(content: string, ok = true): Response {
+function makeResponse(content: string, ok = true, errorBody = ""): Response {
   return {
     ok,
     status: ok ? 200 : 500,
     statusText: ok ? "OK" : "Internal Server Error",
     json: () => Promise.resolve({ choices: [{ message: { content } }] }),
+    text: () => Promise.resolve(errorBody),
   } as unknown as Response;
 }
 
@@ -37,6 +38,15 @@ describe("generateFlashcards", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(makeResponse("```json\nnot valid json\n```")));
 
     await expect(generateFlashcards(validInput)).rejects.toThrow("invalid JSON");
+  });
+
+  it("throws on non-ok HTTP response from OpenRouter", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(makeResponse("", false, '{"error":{"message":"model not found","code":404}}')),
+    );
+
+    await expect(generateFlashcards(validInput)).rejects.toThrow("OpenRouter request failed: 500");
   });
 
   it("throws on fetch timeout (AbortError)", async () => {

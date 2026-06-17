@@ -168,7 +168,7 @@ export function GenerateView() {
         </h1>
         <div className="flex justify-center gap-3">
           <Button onClick={handleGenerateMore}>Generate more</Button>
-          <Button variant="outline">
+          <Button variant="outline" asChild>
             <a href="/dashboard">Go to dashboard</a>
           </Button>
         </div>
