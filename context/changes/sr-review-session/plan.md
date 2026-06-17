@@ -421,24 +421,24 @@ Rollback: brak automatycznego rollbacku dla `DROP COLUMN`. Przed wdrożeniem na 
 
 #### Automated
 
-- [x] 2.1 Testy modułu spaced-repetition przechodzą: `npm test`
-- [x] 2.2 TypeScript kompiluje: `npm run build`
-- [x] 2.3 Linting przechodzi: `npm run lint`
+- [x] 2.1 Testy modułu spaced-repetition przechodzą: `npm test` — 67dd6db
+- [x] 2.2 TypeScript kompiluje: `npm run build` — 67dd6db
+- [x] 2.3 Linting przechodzi: `npm run lint` — 67dd6db
 
 ### Phase 3: API Routes
 
 #### Automated
 
-- [ ] 3.1 TypeScript kompiluje: `npm run build`
-- [ ] 3.2 Linting przechodzi: `npm run lint`
-- [ ] 3.3 Testy modułu SR nadal przechodzą (brak regresji): `npm test`
+- [x] 3.1 TypeScript kompiluje: `npm run build`
+- [x] 3.2 Linting przechodzi: `npm run lint`
+- [x] 3.3 Testy modułu SR nadal przechodzą (brak regresji): `npm test`
 
 #### Manual
 
-- [ ] 3.4 GET `/api/flashcards/review` zwraca `{ cards: [...], nextDue: null }` gdy są karty due
-- [ ] 3.5 GET `/api/flashcards/review` zwraca `{ cards: [], nextDue: "ISO string" }` gdy brak due
-- [ ] 3.6 POST `/api/flashcards/review` z `{cardId, rating: "Good"}` zwraca zaktualizowaną kartę
-- [ ] 3.7 POST bez autoryzacji zwraca 401
+- [x] 3.4 GET `/api/flashcards/review` zwraca `{ cards: [...], nextDue: null }` gdy są karty due
+- [x] 3.5 GET `/api/flashcards/review` zwraca `{ cards: [], nextDue: "ISO string" }` gdy brak due
+- [x] 3.6 POST `/api/flashcards/review` z `{cardId, rating: "Good"}` zwraca zaktualizowaną kartę
+- [x] 3.7 POST bez autoryzacji zwraca 401
 
 ### Phase 4: Session UI
 
