@@ -1,10 +1,10 @@
 ---
 change_id: ai-generate-and-review
 title: AI card generation and review flow
-status: impl_reviewed
+status: archived
 created: 2026-06-16
 updated: 2026-06-17
-archived_at: null
+archived_at: 2026-06-17T09:35:00Z
 ---
 
 ## Notes

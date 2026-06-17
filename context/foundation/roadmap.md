@@ -3,7 +3,7 @@ project: "10xCards"
 version: 1
 status: draft
 created: 2026-05-27
-updated: 2026-06-16
+updated: 2026-06-17
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -34,7 +34,7 @@ S-01 to pierwsze wrota: udowadnia, że AI generuje użyteczne karty (riskiest as
 | ID   | Change ID               | Outcome (user can …)                                                                                     | Prerequisites | PRD refs                               | Status   |
 |------|-------------------------|----------------------------------------------------------------------------------------------------------|---------------|----------------------------------------|----------|
 | F-01 | flashcard-data-schema   | (foundation) Tabela `flashcards` w Supabase z RLS; izolacja danych per user                             | —             | NFR (data isolation)                   | done     |
-| S-01 | ai-generate-and-review  | wkleić tekst, otrzymać karty AI, zaakceptować/edytować/odrzucić każdą, zapisać zaakceptowane do decku   | F-01          | FR-001, FR-003, FR-004, US-01          | blocked  |
+| S-01 | ai-generate-and-review  | wkleić tekst, otrzymać karty AI, zaakceptować/edytować/odrzucić każdą, zapisać zaakceptowane do decku   | F-01          | FR-001, FR-003, FR-004, US-01          | done     |
 | S-02 | sr-review-session       | rozpocząć sesję powtarzania SR i ocenić recall każdej karty; app planuje kolejne powtórki automatycznie | S-01          | FR-009, FR-010                         | proposed |
 | S-03 | manual-card-management  | tworzyć kartę ręcznie, przeglądać, edytować i usuwać karty ze swojego decku                             | F-01          | FR-002, FR-005, FR-006, FR-007, FR-008 | proposed |
 
@@ -88,7 +88,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
   - Jaki jest akceptowalny czas oczekiwania na generację AI, zanim użytkownik przerwie sesję? (latency ceiling dla NFR "generation feedback") — Owner: user/team. Block: yes.
   - Jak zostanie zwalidowana jakość generacji AI przed pierwszym wdrożeniem? (protokół: próbki tekstów, pomiar acceptance rate, iteracja promptu) — Owner: user. Block: yes.
 - **Risk:** Najwyższe ryzyko techniczne w projekcie: streaming OpenRouter przez Cloudflare workerd jest nieudokumentowany dla Astro 6 SSR (`infrastructure.md` risk register). Zbuduj minimalny streaming proof-of-concept przed pełną implementacją. Niska jakość promptu to najważniejszy failure mode — Socrates na FR-003: "prompt engineering must be validated before launch".
-- **Status:** blocked
+- **Status:** done
 
 ### S-02: Sesja powtarzania SR
 
@@ -141,3 +141,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 ## Done
 
 - **F-01: (foundation) Tabela `flashcards` w Supabase z RLS; izolacja danych per user** — Archived 2026-06-16 → `context/archive/2026-05-27-flashcard-data-schema/`. Lesson: —.
+- **S-01: wkleić tekst, otrzymać karty AI, zaakceptować/edytować/odrzucić każdą, zapisać zaakceptowane do decku** — Archived 2026-06-17 → `context/archive/2026-06-16-ai-generate-and-review/`. Lesson: —.
