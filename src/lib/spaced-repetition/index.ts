@@ -1,4 +1,4 @@
-import { fsrs, Rating, type Card } from "ts-fsrs";
+import { fsrs, Rating, type Card, type Grade } from "ts-fsrs";
 import type { Flashcard, UpdateFlashcardSRDto } from "@/lib/flashcards/types";
 import type { SRRating } from "./types";
 
@@ -9,16 +9,16 @@ export function computeNextCard(card: Flashcard, rating: SRRating): UpdateFlashc
     due: new Date(card.due_date),
     stability: card.stability,
     difficulty: card.difficulty,
-
     elapsed_days: card.elapsed_days,
     scheduled_days: card.scheduled_days,
     reps: card.reps,
     lapses: card.lapses,
     state: card.state,
     last_review: card.last_review ? new Date(card.last_review) : undefined,
+    learning_steps: 0,
   };
 
-  const ratingEnum = Rating[rating as keyof typeof Rating];
+  const ratingEnum = Rating[rating as keyof typeof Rating] as Grade;
   const result = fsrs().next(tsCard, new Date(), ratingEnum);
 
   return {

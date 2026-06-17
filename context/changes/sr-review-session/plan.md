@@ -429,30 +429,30 @@ Rollback: brak automatycznego rollbacku dla `DROP COLUMN`. Przed wdrożeniem na 
 
 #### Automated
 
-- [x] 3.1 TypeScript kompiluje: `npm run build`
-- [x] 3.2 Linting przechodzi: `npm run lint`
-- [x] 3.3 Testy modułu SR nadal przechodzą (brak regresji): `npm test`
+- [x] 3.1 TypeScript kompiluje: `npm run build` — 53ead1a
+- [x] 3.2 Linting przechodzi: `npm run lint` — 53ead1a
+- [x] 3.3 Testy modułu SR nadal przechodzą (brak regresji): `npm test` — 53ead1a
 
 #### Manual
 
-- [x] 3.4 GET `/api/flashcards/review` zwraca `{ cards: [...], nextDue: null }` gdy są karty due
-- [x] 3.5 GET `/api/flashcards/review` zwraca `{ cards: [], nextDue: "ISO string" }` gdy brak due
-- [x] 3.6 POST `/api/flashcards/review` z `{cardId, rating: "Good"}` zwraca zaktualizowaną kartę
-- [x] 3.7 POST bez autoryzacji zwraca 401
+- [x] 3.4 GET `/api/flashcards/review` zwraca `{ cards: [...], nextDue: null }` gdy są karty due — 53ead1a
+- [x] 3.5 GET `/api/flashcards/review` zwraca `{ cards: [], nextDue: "ISO string" }` gdy brak due — 53ead1a
+- [x] 3.6 POST `/api/flashcards/review` z `{cardId, rating: "Good"}` zwraca zaktualizowaną kartę — 53ead1a
+- [x] 3.7 POST bez autoryzacji zwraca 401 — 53ead1a
 
 ### Phase 4: Session UI
 
 #### Automated
 
-- [ ] 4.1 TypeScript kompiluje: `npm run build`
-- [ ] 4.2 Linting przechodzi: `npm run lint`
+- [x] 4.1 TypeScript kompiluje: `npm run build`
+- [x] 4.2 Linting przechodzi: `npm run lint`
 
 #### Manual
 
-- [ ] 4.3 `/review` bez zalogowania → redirect do `/auth/signin`
-- [ ] 4.4 `/review` z kartami due: widoczna pierwsza karta i numer "1 / N"
-- [ ] 4.5 Flip card flow: pytanie → "Pokaż odpowiedź" → odpowiedź + 4 przyciski ocen
-- [ ] 4.6 Po ostatniej ocenie: ekran podsumowania z liczbą kart i rozkładem
-- [ ] 4.7 Pola FSRS zaktualizowane w Supabase Studio po ocenie
-- [ ] 4.8 Empty state: komunikat + data następnej powtórki
-- [ ] 4.9 Brak regresji w `/generate` (S-01 flow nadal działa)
+- [x] 4.3 `/review` bez zalogowania → redirect do `/auth/signin`
+- [x] 4.4 `/review` z kartami due: widoczna pierwsza karta i numer "1 / N"
+- [x] 4.5 Flip card flow: pytanie → "Pokaż odpowiedź" → odpowiedź + 4 przyciski ocen
+- [x] 4.6 Po ostatniej ocenie: ekran podsumowania z liczbą kart i rozkładem
+- [x] 4.7 Pola FSRS zaktualizowane w Supabase Studio po ocenie
+- [x] 4.8 Empty state: komunikat + data następnej powtórki
+- [x] 4.9 Brak regresji w `/generate` (S-01 flow nadal działa)
