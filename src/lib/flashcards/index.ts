@@ -36,14 +36,26 @@ export async function deleteFlashcard(supabase: SupabaseClient, id: string): Pro
   if (error) throw new Error(error.message);
 }
 
-export async function listDueFlashcards(supabase: SupabaseClient): Promise<Flashcard[]> {
+export async function listDueFlashcards(supabase: SupabaseClient, limit = 100): Promise<Flashcard[]> {
   const { data, error } = await supabase
     .from(TABLE)
     .select("*")
     .lte("due_date", new Date().toISOString())
-    .order("due_date", { ascending: true });
+    .order("due_date", { ascending: true })
+    .limit(limit);
   if (error) throw new Error(error.message);
   return data as Flashcard[];
+}
+
+export async function getNextDueDate(supabase: SupabaseClient): Promise<string | null> {
+  const { data } = await supabase
+    .from(TABLE)
+    .select("due_date")
+    .gt("due_date", new Date().toISOString())
+    .order("due_date", { ascending: true })
+    .limit(1);
+
+  return (data?.[0]?.due_date as string | undefined) ?? null;
 }
 
 export async function batchCreateFlashcards(

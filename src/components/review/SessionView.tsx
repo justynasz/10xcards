@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Flashcard } from "@/lib/flashcards/types";
+import type { SRRating } from "@/lib/spaced-repetition";
 
 type ViewState = "loading" | "session" | "flipped" | "saving" | "summary" | "empty";
-type SRRating = "Again" | "Hard" | "Good" | "Easy";
 
 interface Results {
   again: number;
@@ -23,8 +23,11 @@ export function SessionView() {
 
   useEffect(() => {
     fetch("/api/flashcards/review")
-      .then((r) => r.json())
-      .then((data: { cards: Flashcard[]; nextDue: string | null }) => {
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json() as Promise<{ cards: Flashcard[]; nextDue: string | null }>;
+      })
+      .then((data) => {
         if (data.cards.length === 0) {
           setNextDue(data.nextDue);
           setViewState("empty");

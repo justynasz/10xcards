@@ -37,8 +37,11 @@ const makeSupabase = (result: { data: unknown; error: unknown }) => ({
   delete: vi.fn().mockReturnThis(),
   eq: vi.fn().mockReturnThis(),
   lte: vi.fn().mockReturnThis(),
-  order: vi.fn().mockResolvedValue(result),
-  single: vi.fn().mockResolvedValue(result),
+  gt: vi.fn().mockReturnThis(),
+  order: vi.fn().mockReturnThis(),
+  limit: vi.fn().mockReturnThis(),
+  single: vi.fn().mockReturnThis(),
+  ...result,
 });
 
 describe("listFlashcards", () => {

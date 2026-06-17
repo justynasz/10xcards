@@ -1,3 +1,5 @@
+begin;
+
 alter table public.flashcards
   drop column easiness_factor,
   drop column interval_days,
@@ -10,3 +12,5 @@ alter table public.flashcards
   add column lapses         int         not null default 0,
   add column state          int         not null default 0,
   add column last_review    timestamptz          default null;
+
+commit;

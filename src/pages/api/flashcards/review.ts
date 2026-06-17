@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase";
-import { listDueFlashcards, getFlashcard, updateFlashcardSR } from "@/lib/flashcards";
+import { listDueFlashcards, getFlashcard, updateFlashcardSR, getNextDueDate } from "@/lib/flashcards";
 import { computeNextCard } from "@/lib/spaced-repetition";
 
 export const prerender = false;
@@ -21,14 +21,7 @@ export const GET: APIRoute = async (context) => {
 
     let nextDue: string | null = null;
     if (cards.length === 0) {
-      const { data } = await supabase
-        .from("flashcards")
-        .select("due_date")
-        .gt("due_date", new Date().toISOString())
-        .order("due_date", { ascending: true })
-        .limit(1);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      nextDue = data?.[0]?.due_date ?? null;
+      nextDue = await getNextDueDate(supabase);
     }
 
     return Response.json({ cards, nextDue });
