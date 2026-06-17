@@ -444,15 +444,15 @@ Rollback: brak automatycznego rollbacku dla `DROP COLUMN`. Przed wdrożeniem na 
 
 #### Automated
 
-- [x] 4.1 TypeScript kompiluje: `npm run build`
-- [x] 4.2 Linting przechodzi: `npm run lint`
+- [x] 4.1 TypeScript kompiluje: `npm run build` — ac0032b
+- [x] 4.2 Linting przechodzi: `npm run lint` — ac0032b
 
 #### Manual
 
-- [x] 4.3 `/review` bez zalogowania → redirect do `/auth/signin`
-- [x] 4.4 `/review` z kartami due: widoczna pierwsza karta i numer "1 / N"
-- [x] 4.5 Flip card flow: pytanie → "Pokaż odpowiedź" → odpowiedź + 4 przyciski ocen
-- [x] 4.6 Po ostatniej ocenie: ekran podsumowania z liczbą kart i rozkładem
-- [x] 4.7 Pola FSRS zaktualizowane w Supabase Studio po ocenie
-- [x] 4.8 Empty state: komunikat + data następnej powtórki
-- [x] 4.9 Brak regresji w `/generate` (S-01 flow nadal działa)
+- [x] 4.3 `/review` bez zalogowania → redirect do `/auth/signin` — ac0032b
+- [x] 4.4 `/review` z kartami due: widoczna pierwsza karta i numer "1 / N" — ac0032b
+- [x] 4.5 Flip card flow: pytanie → "Pokaż odpowiedź" → odpowiedź + 4 przyciski ocen — ac0032b
+- [x] 4.6 Po ostatniej ocenie: ekran podsumowania z liczbą kart i rozkładem — ac0032b
+- [x] 4.7 Pola FSRS zaktualizowane w Supabase Studio po ocenie — ac0032b
+- [x] 4.8 Empty state: komunikat + data następnej powtórki — ac0032b
+- [x] 4.9 Brak regresji w `/generate` (S-01 flow nadal działa) — ac0032b
