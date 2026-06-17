@@ -406,24 +406,24 @@ Rollback: brak automatycznego rollbacku dla `DROP COLUMN`. Przed wdrożeniem na 
 
 #### Automated
 
-- [x] 1.1 Migracja aplikuje się lokalnie bez błędu: `npx supabase db reset`
-- [x] 1.2 TypeScript kompiluje bez błędów: `npm run build`
-- [x] 1.3 Linting przechodzi: `npm run lint`
-- [x] 1.4 Istniejące testy przechodzą: `npm test`
+- [x] 1.1 Migracja aplikuje się lokalnie bez błędu: `npx supabase db reset` — a2c08d7
+- [x] 1.2 TypeScript kompiluje bez błędów: `npm run build` — a2c08d7
+- [x] 1.3 Linting przechodzi: `npm run lint` — a2c08d7
+- [x] 1.4 Istniejące testy przechodzą: `npm test` — a2c08d7
 
 #### Manual
 
-- [x] 1.5 Tabela `flashcards` w Supabase Studio ma kolumny FSRS zamiast SM-2
-- [x] 1.6 Karty zapisane przez S-01 widoczne z wartościami FSRS defaults
-- [x] 1.7 Dashboard nadal wyświetla karty bez błędu
+- [x] 1.5 Tabela `flashcards` w Supabase Studio ma kolumny FSRS zamiast SM-2 — a2c08d7
+- [x] 1.6 Karty zapisane przez S-01 widoczne z wartościami FSRS defaults — a2c08d7
+- [x] 1.7 Dashboard nadal wyświetla karty bez błędu — a2c08d7
 
 ### Phase 2: Moduł FSRS
 
 #### Automated
 
-- [ ] 2.1 Testy modułu spaced-repetition przechodzą: `npm test`
-- [ ] 2.2 TypeScript kompiluje: `npm run build`
-- [ ] 2.3 Linting przechodzi: `npm run lint`
+- [x] 2.1 Testy modułu spaced-repetition przechodzą: `npm test`
+- [x] 2.2 TypeScript kompiluje: `npm run build`
+- [x] 2.3 Linting przechodzi: `npm run lint`
 
 ### Phase 3: API Routes
 
