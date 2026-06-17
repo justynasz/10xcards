@@ -17,10 +17,15 @@ const makeCard = (overrides?: Partial<Flashcard>): Flashcard => ({
   back: "A typed superset of JavaScript.",
   created_at: "2026-01-01T00:00:00Z",
   updated_at: "2026-01-01T00:00:00Z",
-  easiness_factor: 2.5,
-  interval_days: 1,
-  repetitions: 0,
+  stability: 0,
+  difficulty: 0,
+  elapsed_days: 0,
+  scheduled_days: 0,
+  reps: 0,
+  lapses: 0,
+  state: 0,
   due_date: "2026-01-01T00:00:00Z",
+  last_review: null,
   ...overrides,
 });
 
@@ -110,12 +115,17 @@ describe("listDueFlashcards", () => {
 });
 
 describe("updateFlashcardSR", () => {
-  it("updates SM-2 fields and returns updated card", async () => {
+  it("updates FSRS fields and returns updated card", async () => {
     const dto: UpdateFlashcardSRDto = {
-      easiness_factor: 2.6,
-      interval_days: 6,
-      repetitions: 1,
+      stability: 4.5,
+      difficulty: 5.2,
+      elapsed_days: 0,
+      scheduled_days: 6,
+      reps: 1,
+      lapses: 0,
+      state: 2,
       due_date: "2026-01-07T00:00:00Z",
+      last_review: "2026-01-01T00:00:00Z",
     };
     const updated = makeCard({ ...dto });
     const supabase = makeSupabase({ data: updated, error: null });
@@ -129,10 +139,15 @@ describe("updateFlashcardSR", () => {
 
   it("throws on supabase error", async () => {
     const dto: UpdateFlashcardSRDto = {
-      easiness_factor: 2.5,
-      interval_days: 1,
-      repetitions: 0,
+      stability: 0,
+      difficulty: 0,
+      elapsed_days: 0,
+      scheduled_days: 0,
+      reps: 0,
+      lapses: 0,
+      state: 0,
       due_date: "2026-01-01T00:00:00Z",
+      last_review: null,
     };
     const supabase = makeSupabase({ data: null, error: new Error("db error") });
     await expect(updateFlashcardSR(supabase as never, "card-1", dto)).rejects.toThrow("db error");

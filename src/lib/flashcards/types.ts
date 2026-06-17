@@ -5,17 +5,27 @@ export interface Flashcard {
   back: string;
   created_at: string;
   updated_at: string;
-  easiness_factor: number;
-  interval_days: number;
-  repetitions: number;
+  stability: number;
+  difficulty: number;
+  elapsed_days: number;
+  scheduled_days: number;
+  reps: number;
+  lapses: number;
+  state: number;
   due_date: string;
+  last_review: string | null;
 }
 
 export interface UpdateFlashcardSRDto {
-  easiness_factor: number;
-  interval_days: number;
-  repetitions: number;
-  due_date: string; // ISO 8601 timestamp
+  stability: number;
+  difficulty: number;
+  elapsed_days: number;
+  scheduled_days: number;
+  reps: number;
+  lapses: number;
+  state: number;
+  due_date: string;
+  last_review: string | null;
 }
 
 export interface CreateFlashcardDto {

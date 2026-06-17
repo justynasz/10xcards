@@ -92,14 +92,14 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 ### S-02: Sesja powtarzania SR
 
-- **Outcome:** user can rozpocząć sesję powtarzania spaced repetition; dla każdej karty ocenić recall (skala 0–5); app wylicza następną datę powtórki algorytmem SM-2 i zapisuje do Supabase.
+- **Outcome:** user can rozpocząć sesję powtarzania spaced repetition; dla każdej karty ocenić recall (Again/Hard/Good/Easy); app wylicza następną datę powtórki algorytmem FSRS (via `ts-fsrs`) i zapisuje do Supabase.
 - **Change ID:** sr-review-session
 - **PRD refs:** FR-009, FR-010
 - **Prerequisites:** S-01
 - **Parallel with:** —
 - **Blockers:** —
 - **Unknowns:** —
-- **Risk:** SM-2 to algorytm off-the-shelf (PRD §Non-Goals: bez custom scheduling); implementacja prosta, ale obliczenia SM-2 + zapis do Supabase mogą trafić w limit CPU time Cloudflare workerd (`infrastructure.md`). Rozważ przeniesienie obliczeń dat do Supabase RPC (działa w DB, poza limitem Worker).
+- **Risk:** FSRS via `ts-fsrs` (zero runtime deps, pure math — kompatybilne z Cloudflare workerd). Wymaga migracji schematu DB: zamiana pól SM-2 na pola FSRS (`stability`, `difficulty`, `state`, `elapsed_days`, `scheduled_days`, `reps`, `lapses`); karty zapisane przez S-01 inicjalizowane przez `createEmptyCard()`. Obliczenia ~5ms — poniżej limitu CPU workerd, Supabase RPC niepotrzebne. Decyzja FSRS zamiast SM-2: 2026-06-17.
 - **Status:** proposed
 
 ### S-03: Ręczne zarządzanie kartami
