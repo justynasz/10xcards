@@ -2,7 +2,7 @@ import { z } from "zod";
 import type { GeneratedCard, GenerateFlashcardsInput } from "./types";
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
-const MODEL = "google/gemini-flash-1.5";
+const MODEL = "google/gemini-2.5-flash";
 const TIMEOUT_MS = 10_000;
 
 const SYSTEM_PROMPT =
@@ -29,6 +29,7 @@ export async function generateFlashcards(input: GenerateFlashcardsInput): Promis
       },
       body: JSON.stringify({
         model: MODEL,
+        max_tokens: 1000,
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: input.text },
@@ -46,7 +47,8 @@ export async function generateFlashcards(input: GenerateFlashcardsInput): Promis
   }
 
   if (!response.ok) {
-    throw new Error(`OpenRouter request failed: ${response.status} ${response.statusText}`);
+    const errorBody = await response.text();
+    throw new Error(`OpenRouter request failed: ${response.status} ${response.statusText} — ${errorBody}`);
   }
 
   const body = (await response.json()) as { choices?: { message?: { content?: string } }[] };

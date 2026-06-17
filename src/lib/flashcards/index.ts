@@ -51,7 +51,7 @@ export async function batchCreateFlashcards(
   dtos: CreateFlashcardDto[],
 ): Promise<Flashcard[]> {
   const { data, error } = await supabase.from(TABLE).insert(dtos).select();
-  if (error) throw error;
+  if (error) throw new Error(error.message);
   return data as Flashcard[];
 }
 

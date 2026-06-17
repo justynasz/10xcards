@@ -425,26 +425,26 @@ Brak migracji bazy danych — tabela `flashcards` z wszystkimi potrzebnymi polam
 
 #### Automated
 
-- [x] 3.1 `npm run lint` przechodzi bez błędów TypeScript
-- [x] 3.2 `npm test` — nowe testy `batchCreateFlashcards` przechodzą
+- [x] 3.1 `npm run lint` przechodzi bez błędów TypeScript — cdeca27
+- [x] 3.2 `npm test` — nowe testy `batchCreateFlashcards` przechodzą — cdeca27
 
 #### Manual
 
-- [x] 3.3 `POST /api/flashcards/generate` bez auth → 401
-- [x] 3.4 `POST /api/flashcards/batch-create` bez auth → 401
-- [x] 3.5 `src/lib/flashcards/index.ts` eksportuje `batchCreateFlashcards`
+- [x] 3.3 `POST /api/flashcards/generate` bez auth → 401 — cdeca27
+- [x] 3.4 `POST /api/flashcards/batch-create` bez auth → 401 — cdeca27
+- [x] 3.5 `src/lib/flashcards/index.ts` eksportuje `batchCreateFlashcards` — cdeca27
 
 ### Phase 4: UI — Generate Page
 
 #### Automated
 
-- [ ] 4.1 `npm run lint` przechodzi bez błędów TypeScript
-- [ ] 4.2 `npm run build` kończy się bez błędów
+- [x] 4.1 `npm run lint` przechodzi bez błędów TypeScript
+- [x] 4.2 `npm run build` kończy się bez błędów
 
 #### Manual
 
-- [ ] 4.3 Pełny happy path działa end-to-end (tekst → karty → save → sukces)
-- [ ] 4.4 Edit flow: edycja karty inline działa poprawnie
-- [ ] 4.5 Error flow: błąd API wyświetla komunikat inline z Retry
-- [ ] 4.6 Walidacja tekstu: <50 znaków disabled, >5000 znaków komunikat
-- [ ] 4.7 OQ-2: ≥ 5 próbek tekstu ocenionych ręcznie; akceptowalny acceptance rate
+- [x] 4.3 Pełny happy path działa end-to-end (tekst → karty → save → sukces)
+- [x] 4.4 Edit flow: edycja karty inline działa poprawnie
+- [x] 4.5 Error flow: błąd API wyświetla komunikat inline z Retry
+- [x] 4.6 Walidacja tekstu: <50 znaków disabled, >5000 znaków komunikat
+- [x] 4.7 OQ-2: ≥ 5 próbek tekstu ocenionych ręcznie; akceptowalny acceptance rate

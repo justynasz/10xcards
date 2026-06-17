@@ -1,9 +1,8 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import { GenerateView } from "@/components/generate/GenerateView";
 ---
 
 <Layout title="Generate Flashcards">
-  <div class="flex min-h-screen items-center justify-center">
-    <p class="text-gray-500">Coming soon…</p>
-  </div>
+  <GenerateView client:load />
 </Layout>
