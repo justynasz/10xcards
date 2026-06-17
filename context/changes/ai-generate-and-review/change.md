@@ -1,7 +1,7 @@
 ---
 change_id: ai-generate-and-review
 title: AI card generation and review flow
-status: implementing
+status: implemented
 created: 2026-06-16
 updated: 2026-06-17
 archived_at: null

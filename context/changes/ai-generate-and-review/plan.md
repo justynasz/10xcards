@@ -438,13 +438,13 @@ Brak migracji bazy danych — tabela `flashcards` z wszystkimi potrzebnymi polam
 
 #### Automated
 
-- [x] 4.1 `npm run lint` przechodzi bez błędów TypeScript
-- [x] 4.2 `npm run build` kończy się bez błędów
+- [x] 4.1 `npm run lint` przechodzi bez błędów TypeScript — 5fc3ba9
+- [x] 4.2 `npm run build` kończy się bez błędów — 5fc3ba9
 
 #### Manual
 
-- [x] 4.3 Pełny happy path działa end-to-end (tekst → karty → save → sukces)
-- [x] 4.4 Edit flow: edycja karty inline działa poprawnie
-- [x] 4.5 Error flow: błąd API wyświetla komunikat inline z Retry
-- [x] 4.6 Walidacja tekstu: <50 znaków disabled, >5000 znaków komunikat
-- [x] 4.7 OQ-2: ≥ 5 próbek tekstu ocenionych ręcznie; akceptowalny acceptance rate
+- [x] 4.3 Pełny happy path działa end-to-end (tekst → karty → save → sukces) — 5fc3ba9
+- [x] 4.4 Edit flow: edycja karty inline działa poprawnie — 5fc3ba9
+- [x] 4.5 Error flow: błąd API wyświetla komunikat inline z Retry — 5fc3ba9
+- [x] 4.6 Walidacja tekstu: <50 znaków disabled, >5000 znaków komunikat — 5fc3ba9
+- [x] 4.7 OQ-2: ≥ 5 próbek tekstu ocenionych ręcznie; akceptowalny acceptance rate — 5fc3ba9
