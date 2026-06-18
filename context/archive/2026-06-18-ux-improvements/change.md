@@ -1,10 +1,11 @@
 ---
 id: ux-improvements
 title: "Globalna nawigacja, lista fiszek, czyszczenie strony głównej i dashboardu"
-status: implementing
+status: archived
 roadmap_id: —
 created: 2026-06-18
 updated: 2026-06-18
+archived_at: 2026-06-18T00:00:00Z
 ---
 
 # UX improvements
