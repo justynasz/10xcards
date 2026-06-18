@@ -426,22 +426,22 @@ optional and the build doesn't exercise the deletion path.
 
 #### Manual
 
-- [x] 3.3 Wrong password leaves account intact, shows inline error
-- [x] 3.4 Correct password deletes account, redirects to `/auth/signin?deleted=1`
-- [x] 3.5 Signed-out request redirects to `/auth/signin` without error
+- [x] 3.3 Wrong password leaves account intact, shows inline error — 9a55dcd
+- [x] 3.4 Correct password deletes account, redirects to `/auth/signin?deleted=1` — 9a55dcd
+- [x] 3.5 Signed-out request redirects to `/auth/signin` without error — 9a55dcd
 
 ### Phase 4: UI — `/account` page, delete form, dashboard link, deleted-message
 
 #### Automated
 
-- [x] 4.1 Type checking passes: `npm run build`
-- [x] 4.2 Linting passes: `npm run lint`
+- [x] 4.1 Type checking passes: `npm run build` — 9a55dcd
+- [x] 4.2 Linting passes: `npm run lint` — 9a55dcd
 
 #### Manual
 
-- [x] 4.3 Dashboard → `/account` navigation shows email + danger zone
-- [x] 4.4 Wrong password: inline error, account still usable
-- [x] 4.5 Correct password: redirect + confirmation message + signed out
-- [x] 4.6 Flashcards rows confirmed gone (cascade check)
-- [x] 4.7 Re-registration with same email succeeds
-- [x] 4.8 Signed-out `/account` visit redirects to `/auth/signin`
+- [x] 4.3 Dashboard → `/account` navigation shows email + danger zone — 9a55dcd
+- [x] 4.4 Wrong password: inline error, account still usable — 9a55dcd
+- [x] 4.5 Correct password: redirect + confirmation message + signed out — 9a55dcd
+- [x] 4.6 Flashcards rows confirmed gone (cascade check) — 9a55dcd
+- [x] 4.7 Re-registration with same email succeeds — 9a55dcd
+- [x] 4.8 Signed-out `/account` visit redirects to `/auth/signin` — 9a55dcd
