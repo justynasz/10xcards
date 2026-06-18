@@ -401,21 +401,21 @@ optional and the build doesn't exercise the deletion path.
 
 #### Automated
 
-- [x] 1.1 Type checking passes: `npm run build`
-- [x] 1.2 Linting passes: `npm run lint`
+- [x] 1.1 Type checking passes: `npm run build` — d368574
+- [x] 1.2 Linting passes: `npm run lint` — d368574
 
 #### Manual
 
-- [ ] 1.3 Missing-config banner shows "Account deletion" message when secret unset
-- [ ] 1.4 Banner disappears when secret is set, other banners unaffected
+- [x] 1.3 Missing-config banner shows "Account deletion" message when secret unset — d368574
+- [x] 1.4 Banner disappears when secret is set, other banners unaffected — d368574
 
 ### Phase 2: Account deletion module (`src/lib/account/`)
 
 #### Automated
 
-- [ ] 2.1 Unit tests pass: `npm test`
-- [ ] 2.2 Type checking passes: `npm run build`
-- [ ] 2.3 Linting passes: `npm run lint`
+- [x] 2.1 Unit tests pass: `npm test`
+- [x] 2.2 Type checking passes: `npm run build`
+- [x] 2.3 Linting passes: `npm run lint`
 
 ### Phase 3: API route — `POST /api/auth/delete-account`
 
