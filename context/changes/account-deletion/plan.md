@@ -413,16 +413,16 @@ optional and the build doesn't exercise the deletion path.
 
 #### Automated
 
-- [x] 2.1 Unit tests pass: `npm test`
-- [x] 2.2 Type checking passes: `npm run build`
-- [x] 2.3 Linting passes: `npm run lint`
+- [x] 2.1 Unit tests pass: `npm test` — 549192e
+- [x] 2.2 Type checking passes: `npm run build` — 549192e
+- [x] 2.3 Linting passes: `npm run lint` — 549192e
 
 ### Phase 3: API route — `POST /api/auth/delete-account`
 
 #### Automated
 
-- [ ] 3.1 Type checking passes: `npm run build`
-- [ ] 3.2 Linting passes: `npm run lint`
+- [x] 3.1 Type checking passes: `npm run build`
+- [x] 3.2 Linting passes: `npm run lint`
 
 #### Manual
 
