@@ -37,7 +37,7 @@ S-01 to pierwsze wrota: udowadnia, że AI generuje użyteczne karty (riskiest as
 | S-01 | ai-generate-and-review  | wkleić tekst, otrzymać karty AI, zaakceptować/edytować/odrzucić każdą, zapisać zaakceptowane do decku   | F-01          | FR-001, FR-003, FR-004, US-01          | done     |
 | S-02 | sr-review-session       | rozpocząć sesję powtarzania SR i ocenić recall każdej karty; app planuje kolejne powtórki automatycznie | S-01          | FR-009, FR-010                         | proposed |
 | S-03 | manual-card-management  | tworzyć kartę ręcznie, przeglądać, edytować i usuwać karty ze swojego decku                             | F-01          | FR-002, FR-005, FR-006, FR-007, FR-008 | proposed |
-| S-04 | account-deletion        | usunąć konto i wszystkie swoje dane (RODO); app usuwa rekordy i sesję, a następnie wylogowuje           | F-01          | NFR (data isolation, RODO)             | proposed |
+| S-04 | account-deletion        | usunąć konto i wszystkie swoje dane (RODO); app usuwa rekordy i sesję, a następnie wylogowuje           | F-01          | NFR (data isolation, RODO)             | done     |
 | S-05 | ux-improvements         | zbiorczo akceptować/odrzucać karty podczas przeglądu AI, resetować sesję przeglądu; widzieć stany ładowania w kluczowych akcjach | F-01 | FR-003, FR-004, FR-009 | proposed |
 
 ## Streams
@@ -126,8 +126,8 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Parallel with:** S-05
 - **Blockers:** —
 - **Unknowns:** —
-- **Risk:** Operacja nieodwracalna — wymagane dwuetapowe potwierdzenie (dialog + wpisanie hasła/frazy). Supabase `auth.admin.deleteUser` usuwa użytkownika z auth; kaskadowe usunięcie fiszek wymaga `ON DELETE CASCADE` na `user_id` lub osobnego DELETE przed usunięciem usera.
-- **Status:** proposed
+- **Risk:** Operacja nieodwracalna — wymagane dwuetapowe potwierdzenie (dialog + wpisanie hasła/frazy). Supabase `auth.admin.deleteUser` usuwa użytkownika z auth; kaskadowe usunięcie fiszek wymaga `ON DELETE CASCADE` na `user_id` lub osobnego DELETE przed usunięciem usera. Zaimplementowano z prostszym potwierdzeniem (ponowne wpisanie hasła) niż pierwotnie proponowane — decyzja z `/10x-plan`, patrz `context/changes/account-deletion/change.md`.
+- **Status:** done
 
 ### S-05: Ulepszenia UX
 
