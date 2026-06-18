@@ -35,7 +35,7 @@ S-01 to pierwsze wrota: udowadnia, że AI generuje użyteczne karty (riskiest as
 |------|-------------------------|----------------------------------------------------------------------------------------------------------|---------------|----------------------------------------|----------|
 | F-01 | flashcard-data-schema   | (foundation) Tabela `flashcards` w Supabase z RLS; izolacja danych per user                             | —             | NFR (data isolation)                   | done     |
 | S-01 | ai-generate-and-review  | wkleić tekst, otrzymać karty AI, zaakceptować/edytować/odrzucić każdą, zapisać zaakceptowane do decku   | F-01          | FR-001, FR-003, FR-004, US-01          | done     |
-| S-02 | sr-review-session       | rozpocząć sesję powtarzania SR i ocenić recall każdej karty; app planuje kolejne powtórki automatycznie | S-01          | FR-009, FR-010                         | proposed |
+| S-02 | sr-review-session       | rozpocząć sesję powtarzania SR i ocenić recall każdej karty; app planuje kolejne powtórki automatycznie | S-01          | FR-009, FR-010                         | done     |
 | S-03 | manual-card-management  | tworzyć kartę ręcznie, przeglądać, edytować i usuwać karty ze swojego decku                             | F-01          | FR-002, FR-005, FR-006, FR-007, FR-008 | proposed |
 | S-04 | account-deletion        | usunąć konto i wszystkie swoje dane (RODO); app usuwa rekordy i sesję, a następnie wylogowuje           | F-01          | NFR (data isolation, RODO)             | done     |
 | S-05 | ux-improvements         | zbiorczo akceptować/odrzucać karty podczas przeglądu AI, resetować sesję przeglądu; widzieć stany ładowania w kluczowych akcjach | F-01 | FR-003, FR-004, FR-009 | done     |
@@ -103,7 +103,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** FSRS via `ts-fsrs` (zero runtime deps, pure math — kompatybilne z Cloudflare workerd). Wymaga migracji schematu DB: zamiana pól SM-2 na pola FSRS (`stability`, `difficulty`, `state`, `elapsed_days`, `scheduled_days`, `reps`, `lapses`); karty zapisane przez S-01 inicjalizowane przez `createEmptyCard()`. Obliczenia ~5ms — poniżej limitu CPU workerd, Supabase RPC niepotrzebne. Decyzja FSRS zamiast SM-2: 2026-06-17.
-- **Status:** proposed
+- **Status:** done
 
 ### S-03: Ręczne zarządzanie kartami
 
@@ -172,3 +172,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **F-01: (foundation) Tabela `flashcards` w Supabase z RLS; izolacja danych per user** — Archived 2026-06-16 → `context/archive/2026-05-27-flashcard-data-schema/`. Lesson: —.
 - **S-01: wkleić tekst, otrzymać karty AI, zaakceptować/edytować/odrzucić każdą, zapisać zaakceptowane do decku** — Archived 2026-06-17 → `context/archive/2026-06-16-ai-generate-and-review/`. Lesson: —.
 - **S-05: globalny NavBar, strona `/flashcards`, hero strony głównej, dashboard ze statystykami** — Archived 2026-06-18 → `context/archive/2026-06-18-ux-improvements/`. Lesson: —.
+- **S-02: user can rozpocząć sesję powtarzania spaced repetition; dla każdej karty ocenić recall (Again/Hard/Good/Easy); app wylicza następną datę powtórki algorytmem FSRS (via `ts-fsrs`) i zapisuje do Supabase.** — Archived 2026-06-18 → `context/archive/2026-06-17-sr-review-session/`. Lesson: —.

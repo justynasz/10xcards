@@ -1,10 +1,11 @@
 ---
 id: sr-review-session
 title: "Sesja powtarzania SR (SM-2)"
-status: impl_reviewed
+status: archived
 roadmap_id: S-02
 created: 2026-06-17
-updated: 2026-06-17
+updated: 2026-06-18
+archived_at: 2026-06-18T00:00:00Z
 ---
 
 # S-02: Sesja powtarzania SR
