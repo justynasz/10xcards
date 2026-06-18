@@ -1,4 +1,4 @@
-import { SUPABASE_URL, SUPABASE_KEY, OPENROUTER_API_KEY } from "astro:env/server";
+import { SUPABASE_URL, SUPABASE_KEY, SUPABASE_SERVICE_ROLE_KEY, OPENROUTER_API_KEY } from "astro:env/server";
 
 export interface ConfigStatus {
   name: string;
@@ -22,6 +22,11 @@ export const configStatuses: ConfigStatus[] = [
     message: "OpenRouter nie jest skonfigurowany — generowanie fiszek AI jest wyłączone.",
     docsUrl: "https://openrouter.ai/keys",
     docsLabel: "Pobierz klucz API OpenRouter",
+  },
+  {
+    name: "Account deletion",
+    configured: Boolean(SUPABASE_SERVICE_ROLE_KEY),
+    message: "Usuwanie konta nie jest skonfigurowane — funkcja jest wyłączona.",
   },
 ];
 
