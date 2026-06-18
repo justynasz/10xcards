@@ -20,26 +20,28 @@ Każda strona (poza auth) ma to samo menu na górze z linkami do Generuj/Fiszki/
 
 ## Key Decisions Made
 
-| Decision | Choice | Why (1 sentence) | Source |
-|---|---|---|---|
-| Zakres `/flashcards` | Tylko podgląd (read-only) | Mały, domknięty zakres — edycja/usuwanie to S-03 w roadmapie | Plan |
-| Architektura nawigacji | Jeden `NavBar` w `Layout.astro`, zastępuje `Topbar` | Jedno miejsce do utrzymania, automatycznie na każdej stronie | Plan |
-| Nawigacja na stronach auth | Brak | Nie rozprasza w trakcie logowania/rejestracji | Plan |
-| Mobile nav | Hamburger (natywny `<details>/<summary>`, zero JS) | Standardowy wzorzec, zgodny z "Astro-first" konwencją projektu | Plan |
-| Hero copy | Nowy opis oparty na PRD (US-01), bez przycisków CTA | Auth-aware UI żyje wyłącznie w NavBar — brak duplikacji logiki | Plan |
-| Dashboard redesign | Grid kart statystyk (liczba fiszek, due today) | Wykorzystuje już istniejące funkcje serwisowe, zero nowego API | Plan |
-| URL listy fiszek | `/flashcards` | Konsekwentne z nazwą modułu/tabeli `flashcards` w kodzie | Plan |
-| Empty state listy | Komunikat + CTA do `/generate` | Prowadzi nowego użytkownika do akcji, nie pustą stronę | Plan |
+| Decision                   | Choice                                              | Why (1 sentence)                                               | Source |
+| -------------------------- | --------------------------------------------------- | -------------------------------------------------------------- | ------ |
+| Zakres `/flashcards`       | Tylko podgląd (read-only)                           | Mały, domknięty zakres — edycja/usuwanie to S-03 w roadmapie   | Plan   |
+| Architektura nawigacji     | Jeden `NavBar` w `Layout.astro`, zastępuje `Topbar` | Jedno miejsce do utrzymania, automatycznie na każdej stronie   | Plan   |
+| Nawigacja na stronach auth | Brak                                                | Nie rozprasza w trakcie logowania/rejestracji                  | Plan   |
+| Mobile nav                 | Hamburger (natywny `<details>/<summary>`, zero JS)  | Standardowy wzorzec, zgodny z "Astro-first" konwencją projektu | Plan   |
+| Hero copy                  | Nowy opis oparty na PRD (US-01), bez przycisków CTA | Auth-aware UI żyje wyłącznie w NavBar — brak duplikacji logiki | Plan   |
+| Dashboard redesign         | Grid kart statystyk (liczba fiszek, due today)      | Wykorzystuje już istniejące funkcje serwisowe, zero nowego API | Plan   |
+| URL listy fiszek           | `/flashcards`                                       | Konsekwentne z nazwą modułu/tabeli `flashcards` w kodzie       | Plan   |
+| Empty state listy          | Komunikat + CTA do `/generate`                      | Prowadzi nowego użytkownika do akcji, nie pustą stronę         | Plan   |
 
 ## Scope
 
 **In scope:**
+
 - Globalny `NavBar` (Layout-level), zastępujący `Topbar.astro`
 - Nowa strona `/flashcards` (read-only) + `GET /api/flashcards/list`
 - Czyszczenie strony głównej (hero copy, usunięcie boilerplate)
 - Redesign dashboardu (statystyki server-side, bez nowego API)
 
 **Out of scope:**
+
 - Edycja/usuwanie/ręczne tworzenie fiszek (S-03, status `proposed`)
 - Redesign wizualny `/generate` i `/review`
 - Paginacja/wyszukiwanie na liście fiszek
@@ -51,12 +53,12 @@ Każda strona (poza auth) ma to samo menu na górze z linkami do Generuj/Fiszki/
 
 ## Phases at a Glance
 
-| Phase | What it delivers | Key risk |
-|---|---|---|
-| 1. Strona `/flashcards` | Nowy endpoint + strona + komponent listy (read-only) | Brak — wzorzec 1:1 z istniejącym `SessionView` |
-| 2. Globalny NavBar | Jeden komponent nawigacji na wszystkich stronach poza auth | Wizualne starcie ciemnego baru z jasnym tłem `/generate`/`/review` — zaadresowane nieprzezroczystym tłem navbara |
-| 3. Czyszczenie strony głównej | Hero z prawdziwym opisem, bez boilerplate i duplikatu auth-UI | Brak |
-| 4. Redesign dashboardu | Grid statystyk zamiast statycznej karty | Brak — dane już dostępne w serwisie |
+| Phase                         | What it delivers                                              | Key risk                                                                                                         |
+| ----------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| 1. Strona `/flashcards`       | Nowy endpoint + strona + komponent listy (read-only)          | Brak — wzorzec 1:1 z istniejącym `SessionView`                                                                   |
+| 2. Globalny NavBar            | Jeden komponent nawigacji na wszystkich stronach poza auth    | Wizualne starcie ciemnego baru z jasnym tłem `/generate`/`/review` — zaadresowane nieprzezroczystym tłem navbara |
+| 3. Czyszczenie strony głównej | Hero z prawdziwym opisem, bez boilerplate i duplikatu auth-UI | Brak                                                                                                             |
+| 4. Redesign dashboardu        | Grid statystyk zamiast statycznej karty                       | Brak — dane już dostępne w serwisie                                                                              |
 
 **Prerequisites:** S-01 i S-02 (done) — fiszki i sesje powtórek już istnieją w bazie.
 **Estimated effort:** ~1 sesja implementacyjna, 4 fazy.
