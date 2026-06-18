@@ -15,7 +15,6 @@ export function computeNextCard(card: Flashcard, rating: SRRating): UpdateFlashc
     lapses: card.lapses,
     state: card.state,
     last_review: card.last_review ? new Date(card.last_review) : undefined,
-    learning_steps: 0,
   };
 
   const ratingEnum = Rating[rating as keyof typeof Rating] as Grade;
