@@ -3,7 +3,7 @@ project: "10xCards"
 version: 1
 status: draft
 created: 2026-05-27
-updated: 2026-06-17
+updated: 2026-06-18
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -38,7 +38,7 @@ S-01 to pierwsze wrota: udowadnia, że AI generuje użyteczne karty (riskiest as
 | S-02 | sr-review-session       | rozpocząć sesję powtarzania SR i ocenić recall każdej karty; app planuje kolejne powtórki automatycznie | S-01          | FR-009, FR-010                         | proposed |
 | S-03 | manual-card-management  | tworzyć kartę ręcznie, przeglądać, edytować i usuwać karty ze swojego decku                             | F-01          | FR-002, FR-005, FR-006, FR-007, FR-008 | proposed |
 | S-04 | account-deletion        | usunąć konto i wszystkie swoje dane (RODO); app usuwa rekordy i sesję, a następnie wylogowuje           | F-01          | NFR (data isolation, RODO)             | done     |
-| S-05 | ux-improvements         | zbiorczo akceptować/odrzucać karty podczas przeglądu AI, resetować sesję przeglądu; widzieć stany ładowania w kluczowych akcjach | F-01 | FR-003, FR-004, FR-009 | proposed |
+| S-05 | ux-improvements         | zbiorczo akceptować/odrzucać karty podczas przeglądu AI, resetować sesję przeglądu; widzieć stany ładowania w kluczowych akcjach | F-01 | FR-003, FR-004, FR-009 | done     |
 
 ## Streams
 
@@ -139,7 +139,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Zidentyfikowane podczas pracy nad S-01 i S-02. Zbiorcze akcje muszą być odwracalne w ramach sesji (undo przed zapisem). Reset sesji SR wymaga wyczyszczenia stanu lokalnego bez modyfikacji danych SM-2/FSRS w Supabase.
-- **Status:** proposed
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -171,3 +171,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 - **F-01: (foundation) Tabela `flashcards` w Supabase z RLS; izolacja danych per user** — Archived 2026-06-16 → `context/archive/2026-05-27-flashcard-data-schema/`. Lesson: —.
 - **S-01: wkleić tekst, otrzymać karty AI, zaakceptować/edytować/odrzucić każdą, zapisać zaakceptowane do decku** — Archived 2026-06-17 → `context/archive/2026-06-16-ai-generate-and-review/`. Lesson: —.
+- **S-05: globalny NavBar, strona `/flashcards`, hero strony głównej, dashboard ze statystykami** — Archived 2026-06-18 → `context/archive/2026-06-18-ux-improvements/`. Lesson: —.
