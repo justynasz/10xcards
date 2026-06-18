@@ -1,0 +1,8 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { FlashcardsListView } from "@/components/flashcards/FlashcardsListView";
+---
+
+<Layout title="Twoje fiszki">
+  <FlashcardsListView client:load />
+</Layout>
