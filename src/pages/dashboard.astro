@@ -1,35 +1,88 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import { createClient } from "@/lib/supabase";
+import { listFlashcards, listDueFlashcards, getNextDueDate } from "@/lib/flashcards";
 
 const { user } = Astro.locals;
+
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+
+let totalCount = 0;
+let dueCount = 0;
+let nextDue: string | null = null;
+
+if (supabase) {
+  const [all, due] = await Promise.all([listFlashcards(supabase), listDueFlashcards(supabase)]);
+  totalCount = all.length;
+  dueCount = due.length;
+  if (dueCount === 0) {
+    nextDue = await getNextDueDate(supabase);
+  }
+}
 ---
 
 <Layout title="Dashboard">
-  <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
-    <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
-      <h1 class="mb-4 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
+  <div class="bg-cosmic min-h-screen p-4 sm:p-8">
+    <div class="mx-auto max-w-3xl">
+      <h1 class="mb-2 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
         Dashboard
       </h1>
-      <p class="text-blue-100/80">
-        Welcome, <span class="font-semibold text-white">{user?.email}</span>
+      <p class="mb-8 text-sm text-blue-100/50">
+        Witaj, <span class="text-blue-100/80">{user?.email}</span>
       </p>
-      <p class="mt-2 text-sm text-blue-100/50">This page is only for authenticated users.</p>
-      <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <!-- Stat: total cards -->
+        <div class="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
+          <p class="text-sm text-blue-100/50">Łącznie fiszek</p>
+          <p class="mt-2 text-4xl font-bold text-white">{totalCount}</p>
+        </div>
+
+        <!-- Stat: due today -->
+        <div class="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
+          <p class="text-sm text-blue-100/50">Do powtórki dziś</p>
+          {
+            dueCount > 0 ? (
+              <p class="mt-2 text-4xl font-bold text-white">{dueCount}</p>
+            ) : nextDue ? (
+              <>
+                <p class="mt-2 text-4xl font-bold text-white">0</p>
+                <p class="mt-1 text-xs text-blue-100/40">
+                  Następna:{" "}
+                  {new Date(nextDue).toLocaleDateString("pl-PL", {
+                    day: "numeric",
+                    month: "short",
+                  })}
+                </p>
+              </>
+            ) : (
+              <p class="mt-2 text-4xl font-bold text-white">0</p>
+            )
+          }
+        </div>
+
+        <!-- CTA: generate -->
         <a
           href="/generate"
-          class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm text-white transition-colors hover:bg-white/20"
+          class="flex flex-col justify-between rounded-xl border border-purple-400/30 bg-purple-500/10 p-6 backdrop-blur-xl transition-colors hover:bg-purple-500/20"
         >
-          Generate flashcards
+          <p class="text-sm text-blue-100/50">Akcja</p>
+          <p class="mt-2 text-lg font-semibold text-white">Wygeneruj nowe fiszki</p>
         </a>
-        <form method="POST" action="/api/auth/signout">
-          <button
-            type="submit"
-            class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm transition-colors hover:bg-white/20"
-          >
-            Sign out
-          </button>
-        </form>
       </div>
+
+      {
+        dueCount > 0 && (
+          <div class="mt-6">
+            <a
+              href="/review"
+              class="inline-flex items-center gap-2 rounded-lg bg-purple-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-purple-500"
+            >
+              Rozpocznij powtórkę ({dueCount})
+            </a>
+          </div>
+        )
+      }
     </div>
   </div>
 </Layout>
