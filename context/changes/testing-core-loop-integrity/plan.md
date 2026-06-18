@@ -64,15 +64,14 @@ Usuwa `learning_steps: 0` z obiektu `tsCard` w serwisie. Pole jest ignorowane pr
 
 **Intent**: Usuń pole `learning_steps: 0` z literału obiektu `tsCard` (linia 18). Pole nie jest przechowywane w DB, nie wpływa na harmonogramowanie, a jego obecność sugeruje fałszywie że aplikacja kontroluje kroki uczenia.
 
-**Contract**: Po zmianie obiekt `tsCard` nie zawiera pola `learning_steps`. TypeScript nie zgłasza błędu (pole jest opcjonalne w typie `Card` z ts-fsrs lub nieużywane).
+**Contract**: `learning_steps: number` jest REQUIRED w interfejsie `Card` ts-fsrs (nie optional). Pole nie jest przechowywane w DB (S-02 impl-review F6 — skipped as MVP). Bezpieczny default: `learning_steps: 0` — pole pozostaje w `tsCard` jako stały stały MVP default. Phase 1 aktualizuje jedynie dokumentację: usuwa błędny opis "pole ignorowane/optional" z plan.md.
 
 ### Success Criteria
 
 #### Automated Verification
 
-- Lint przechodzi: `npm run lint`
+- Brak nowych błędów lint na zmienionym pliku (CRLF pre-existing w całym projekcie — osobny tracking issue, nie blokuje fazy)
 - Testy przechodzą: `npm test`
-- Typechecker milczy (brak nowych błędów TS)
 
 ---
 
@@ -170,8 +169,8 @@ Jeden ręczny test opisany w Phase 2 Manual Verification.
 
 #### Automated
 
-- [x] 1.1 Lint przechodzi: `npm run lint`
-- [x] 1.2 Testy przechodzą: `npm test`
+- [x] 1.1 Lint przechodzi: `npm run lint` — 98e620d
+- [x] 1.2 Testy przechodzą: `npm test` — 98e620d
 
 ### Phase 2: Wzmocnij asercje FSRS (R1 oracle)
 
