@@ -296,7 +296,7 @@ Brak zmian w schemacie bazy danych. Brak migracji danych — wszystkie zmiany s�
 
 - [ ] 1.1 Lint przechodzi: `npm run lint`
 - [ ] 1.2 Build przechodzi (typecheck + Astro check): `npm run build`
-- [x] 1.3 Testy jednostkowe nie regresują: `npm test`
+- [x] 1.3 Testy jednostkowe nie regresują: `npm test` — 57361ec
 
 #### Manual
 

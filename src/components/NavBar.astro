@@ -1,0 +1,106 @@
+---
+const { user } = Astro.locals;
+const pathname = Astro.url.pathname;
+
+const links = [
+  { href: "/generate", label: "Generuj" },
+  { href: "/flashcards", label: "Fiszki" },
+  { href: "/review", label: "Powtórki" },
+  { href: "/dashboard", label: "Dashboard" },
+];
+
+function isActive(href: string) {
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+---
+
+<header class="bg-cosmic sticky top-0 z-50 border-b border-white/10">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-8">
+    <a href="/" class="text-lg font-bold text-white">10xCards</a>
+
+    <nav class="hidden items-center gap-6 sm:flex">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isActive(link.href) ? "page" : undefined}
+            class:list={[
+              "text-sm transition-colors",
+              isActive(link.href) ? "font-semibold text-white" : "text-blue-100/70 hover:text-white",
+            ]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="hidden items-center gap-3 sm:flex">
+      {
+        user ? (
+          <>
+            <span class="text-sm text-blue-100/70">{user.email}</span>
+            <form method="POST" action="/api/auth/signout">
+              <button type="submit" class="text-sm text-purple-300 transition-colors hover:text-purple-100">
+                Wyloguj
+              </button>
+            </form>
+          </>
+        ) : (
+          <>
+            <a href="/auth/signin" class="text-sm text-purple-300 transition-colors hover:text-purple-100">
+              Zaloguj się
+            </a>
+            <a href="/auth/signup" class="text-sm text-purple-300 transition-colors hover:text-purple-100">
+              Zarejestruj się
+            </a>
+          </>
+        )
+      }
+    </div>
+
+    <details class="relative sm:hidden">
+      <summary class="list-none rounded-md border border-white/20 px-3 py-1.5 text-sm text-white">☰</summary>
+      <div class="absolute right-0 z-50 mt-2 w-56 space-y-3 rounded-xl border border-white/10 bg-[#0a0e1a] p-4 shadow-xl">
+        <nav class="flex flex-col gap-3">
+          {
+            links.map((link) => (
+              <a
+                href={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
+                class:list={[
+                  "text-sm transition-colors",
+                  isActive(link.href) ? "font-semibold text-white" : "text-blue-100/70 hover:text-white",
+                ]}
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </nav>
+        <hr class="border-white/10" />
+        {
+          user ? (
+            <div class="flex flex-col gap-2">
+              <span class="text-sm text-blue-100/70">{user.email}</span>
+              <form method="POST" action="/api/auth/signout">
+                <button type="submit" class="text-left text-sm text-purple-300 hover:text-purple-100">
+                  Wyloguj
+                </button>
+              </form>
+            </div>
+          ) : (
+            <div class="flex flex-col gap-2">
+              <a href="/auth/signin" class="text-sm text-purple-300 hover:text-purple-100">
+                Zaloguj się
+              </a>
+              <a href="/auth/signup" class="text-sm text-purple-300 hover:text-purple-100">
+                Zarejestruj się
+              </a>
+            </div>
+          )
+        }
+      </div>
+    </details>
+  </div>
+</header>
