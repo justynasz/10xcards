@@ -19,6 +19,9 @@ export function computeNextCard(card: Flashcard, rating: SRRating): UpdateFlashc
   };
 
   const ratingEnum = Rating[rating as keyof typeof Rating] as Grade;
+  if (ratingEnum === undefined) {
+    throw new Error(`Invalid rating: "${rating}"`);
+  }
   const result = fsrs().next(tsCard, new Date(), ratingEnum);
 
   return {

@@ -1,7 +1,7 @@
 ---
 id: testing-core-loop-integrity
 title: "Phase 1: Core-loop integrity tests"
-status: implemented
+status: impl_reviewed
 created: 2026-06-19
 updated: 2026-06-19
 risks: [R1, R2, R3]

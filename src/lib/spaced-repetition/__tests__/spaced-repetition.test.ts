@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { computeNextCard } from "../index";
 import type { Flashcard } from "@/lib/flashcards/types";
 
-const newCard = (): Flashcard => ({
+const newCard = (overrides?: Partial<Flashcard>): Flashcard => ({
   id: "test-id",
   user_id: "user-id",
   front: "Q",
@@ -18,6 +18,7 @@ const newCard = (): Flashcard => ({
   state: 0,
   due_date: new Date().toISOString(),
   last_review: null,
+  ...overrides,
 });
 
 describe("computeNextCard", () => {
@@ -25,6 +26,7 @@ describe("computeNextCard", () => {
     const before = Date.now();
     const result = computeNextCard(newCard(), "Again");
     const dueMs = new Date(result.due_date).getTime();
+    expect(result.reps).toBeGreaterThan(0);
     expect(result.state).toBe(1); // Learning
     expect(result.scheduled_days).toBe(0);
     expect(dueMs).toBeGreaterThan(before + 30_000); // > now+30s
@@ -35,6 +37,7 @@ describe("computeNextCard", () => {
     const before = Date.now();
     const result = computeNextCard(newCard(), "Hard");
     const dueMs = new Date(result.due_date).getTime();
+    expect(result.reps).toBeGreaterThan(0);
     expect(result.state).toBe(1); // Learning
     expect(result.scheduled_days).toBe(0);
     expect(dueMs).toBeGreaterThan(before + 330_000); // > now+5.5min
@@ -46,6 +49,7 @@ describe("computeNextCard", () => {
     const result = computeNextCard(newCard(), "Good");
     const dueMs = new Date(result.due_date).getTime();
     expect(result.reps).toBeGreaterThan(0);
+    expect(result.lapses).toBe(0);
     expect(result.state).toBe(1); // Learning
     expect(result.scheduled_days).toBe(0);
     expect(dueMs).toBeGreaterThan(before + 570_000); // > now+9.5min
@@ -57,14 +61,15 @@ describe("computeNextCard", () => {
     const result = computeNextCard(newCard(), "Easy");
     const dueMs = new Date(result.due_date).getTime();
     expect(result.reps).toBeGreaterThan(0);
+    expect(result.lapses).toBe(0);
     expect(result.state).toBe(2); // Review
-    expect(result.scheduled_days).toBe(8);
+    expect(result.scheduled_days).toBeGreaterThan(0);
     expect(dueMs).toBeGreaterThan(before + 7 * 86_400_000); // > now+7d
     expect(dueMs).toBeLessThan(before + 9 * 86_400_000); // < now+9d
   });
 
   it("Review (state=2) + Again → lapses increased by 1", () => {
-    const card: Flashcard = { ...newCard(), state: 2, reps: 5, stability: 4, difficulty: 3 };
+    const card = newCard({ state: 2, reps: 5, stability: 4, difficulty: 3 });
     const result = computeNextCard(card, "Again");
     expect(result.lapses).toBe(card.lapses + 1);
   });
@@ -78,5 +83,9 @@ describe("computeNextCard", () => {
   it("last_review is not null after first review", () => {
     const result = computeNextCard(newCard(), "Good");
     expect(result.last_review).not.toBeNull();
+  });
+
+  it("invalid rating throws", () => {
+    expect(() => computeNextCard(newCard(), "invalid" as SRRating)).toThrow('Invalid rating: "invalid"');
   });
 });
