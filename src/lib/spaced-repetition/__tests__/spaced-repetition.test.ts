@@ -21,23 +21,46 @@ const newCard = (): Flashcard => ({
 });
 
 describe("computeNextCard", () => {
-  it("New + Again → Learning state, due_date in future", () => {
+  it("New + Again → Learning (1), scheduled_days=0, due ≈ now+1min", () => {
+    const before = Date.now();
     const result = computeNextCard(newCard(), "Again");
-    expect([1, 3]).toContain(result.state); // Learning or Relearning
-    expect(new Date(result.due_date).getTime()).toBeGreaterThan(Date.now() - 1000);
+    const dueMs = new Date(result.due_date).getTime();
+    expect(result.state).toBe(1); // Learning
+    expect(result.scheduled_days).toBe(0);
+    expect(dueMs).toBeGreaterThan(before + 30_000); // > now+30s
+    expect(dueMs).toBeLessThan(before + 90_000); // < now+90s
   });
 
-  it("New + Good → Learning state, reps > 0, due_date in future", () => {
+  it("New + Hard → Learning (1), scheduled_days=0, due ≈ now+6min", () => {
+    const before = Date.now();
+    const result = computeNextCard(newCard(), "Hard");
+    const dueMs = new Date(result.due_date).getTime();
+    expect(result.state).toBe(1); // Learning
+    expect(result.scheduled_days).toBe(0);
+    expect(dueMs).toBeGreaterThan(before + 330_000); // > now+5.5min
+    expect(dueMs).toBeLessThan(before + 390_000); // < now+6.5min
+  });
+
+  it("New + Good → Learning (1), scheduled_days=0, due ≈ now+10min", () => {
+    const before = Date.now();
     const result = computeNextCard(newCard(), "Good");
+    const dueMs = new Date(result.due_date).getTime();
     expect(result.reps).toBeGreaterThan(0);
     expect(result.state).toBe(1); // Learning
-    expect(new Date(result.due_date).getTime()).toBeGreaterThan(Date.now() - 1000);
+    expect(result.scheduled_days).toBe(0);
+    expect(dueMs).toBeGreaterThan(before + 570_000); // > now+9.5min
+    expect(dueMs).toBeLessThan(before + 630_000); // < now+10.5min
   });
 
-  it("New + Easy → reps > 0, scheduled_days > 0", () => {
+  it("New + Easy → Review (2), scheduled_days=8, due ≈ now+8d", () => {
+    const before = Date.now();
     const result = computeNextCard(newCard(), "Easy");
+    const dueMs = new Date(result.due_date).getTime();
     expect(result.reps).toBeGreaterThan(0);
-    expect(result.scheduled_days).toBeGreaterThan(0);
+    expect(result.state).toBe(2); // Review
+    expect(result.scheduled_days).toBe(8);
+    expect(dueMs).toBeGreaterThan(before + 7 * 86_400_000); // > now+7d
+    expect(dueMs).toBeLessThan(before + 9 * 86_400_000); // < now+9d
   });
 
   it("Review (state=2) + Again → lapses increased by 1", () => {

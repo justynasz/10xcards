@@ -176,9 +176,9 @@ Jeden ręczny test opisany w Phase 2 Manual Verification.
 
 #### Automated
 
-- [ ] 2.1 Wszystkie testy przechodzą: `npm test`
-- [ ] 2.2 Lint przechodzi: `npm run lint`
+- [x] 2.1 Wszystkie testy przechodzą: `npm test`
+- [x] 2.2 Lint przechodzi: `npm run lint`
 
 #### Manual
 
-- [ ] 2.3 Smoke-test regresji: tymczasowy bug w index.ts powoduje FAIL Again — test wyłapuje błąd
+- [x] 2.3 Smoke-test regresji: tymczasowy bug w index.ts powoduje FAIL Again — test wyłapuje błąd
