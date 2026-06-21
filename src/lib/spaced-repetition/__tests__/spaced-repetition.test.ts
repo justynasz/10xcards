@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { computeNextCard } from "../index";
+import type { SRRating } from "../types";
 import type { Flashcard } from "@/lib/flashcards/types";
 
 const newCard = (overrides?: Partial<Flashcard>): Flashcard => ({
