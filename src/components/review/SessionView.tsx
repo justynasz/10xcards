@@ -117,10 +117,10 @@ export function SessionView() {
         <div className="rounded-lg border border-gray-200 p-4 text-left">
           <p className="mb-2 text-sm font-medium text-gray-700">Rozkład ocen:</p>
           <div className="grid grid-cols-2 gap-2 text-sm">
-            <span className="text-red-600">Again: {results.again}</span>
-            <span className="text-orange-500">Hard: {results.hard}</span>
-            <span className="text-green-600">Good: {results.good}</span>
-            <span className="text-blue-600">Easy: {results.easy}</span>
+            <span className="text-red-600">Znowu: {results.again}</span>
+            <span className="text-orange-500">Trudne: {results.hard}</span>
+            <span className="text-green-600">Dobre: {results.good}</span>
+            <span className="text-blue-600">Łatwe: {results.easy}</span>
           </div>
         </div>
         <Button asChild>
@@ -167,22 +167,30 @@ export function SessionView() {
         </Button>
       ) : (
         <div className="grid grid-cols-4 gap-2">
-          {(["Again", "Hard", "Good", "Easy"] as SRRating[]).map((rating) => (
-            <Button
-              key={rating}
-              disabled={isSaving}
-              onClick={() => void handleRate(rating)}
-              className={cn(
-                "w-full",
-                rating === "Again" && "bg-red-500 text-white hover:bg-red-600",
-                rating === "Hard" && "bg-orange-400 text-white hover:bg-orange-500",
-                rating === "Good" && "bg-green-500 text-white hover:bg-green-600",
-                rating === "Easy" && "bg-blue-500 text-white hover:bg-blue-600",
-              )}
-            >
-              {rating}
-            </Button>
-          ))}
+          {(["Again", "Hard", "Good", "Easy"] as SRRating[]).map((rating) => {
+            const labels: Record<SRRating, string> = {
+              Again: "Znowu",
+              Hard: "Trudne",
+              Good: "Dobre",
+              Easy: "Łatwe",
+            };
+            return (
+              <Button
+                key={rating}
+                disabled={isSaving}
+                onClick={() => void handleRate(rating)}
+                className={cn(
+                  "w-full",
+                  rating === "Again" && "bg-red-500 text-white hover:bg-red-600",
+                  rating === "Hard" && "bg-orange-400 text-white hover:bg-orange-500",
+                  rating === "Good" && "bg-green-500 text-white hover:bg-green-600",
+                  rating === "Easy" && "bg-blue-500 text-white hover:bg-blue-600",
+                )}
+              >
+                {labels[rating]}
+              </Button>
+            );
+          })}
         </div>
       )}
 

@@ -8,6 +8,12 @@ type ViewState = "idle" | "loading" | "review" | "saving" | "success" | "error";
 const MIN_CHARS = 50;
 const MAX_CHARS = 5000;
 
+function cardForm(n: number) {
+  if (n === 1) return "fiszkę";
+  if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return "fiszki";
+  return "fiszek";
+}
+
 export function GenerateView() {
   const [viewState, setViewState] = useState<ViewState>("idle");
   const [text, setText] = useState("");
@@ -38,7 +44,7 @@ export function GenerateView() {
         body: JSON.stringify({ text }),
       });
       const data = (await res.json()) as { cards?: { front: string; back: string }[]; error?: string };
-      if (!res.ok) throw new Error(data.error ?? "Generation failed");
+      if (!res.ok) throw new Error(data.error ?? "Generowanie nie powiodło się");
       const entries: CardEntry[] = (data.cards ?? []).map((c, i) => ({
         id: String(i),
         front: c.front,
@@ -48,7 +54,7 @@ export function GenerateView() {
       setCards(entries);
       setViewState("review");
     } catch (err) {
-      setErrorMessage(err instanceof Error ? err.message : "Unknown error");
+      setErrorMessage(err instanceof Error ? err.message : "Nieznany błąd");
       setViewState("error");
     }
   }
@@ -62,11 +68,11 @@ export function GenerateView() {
         body: JSON.stringify({ cards: acceptedCards.map((c) => ({ front: c.front, back: c.back })) }),
       });
       const data = (await res.json()) as { error?: string };
-      if (!res.ok) throw new Error(data.error ?? "Save failed");
+      if (!res.ok) throw new Error(data.error ?? "Zapisanie nie powiodło się");
       setSavedCount(acceptedCards.length);
       setViewState("success");
     } catch (err) {
-      setErrorMessage(err instanceof Error ? err.message : "Unknown error");
+      setErrorMessage(err instanceof Error ? err.message : "Nieznany błąd");
       setViewState("error");
     }
   }
@@ -89,13 +95,13 @@ export function GenerateView() {
 
     return (
       <div className="mx-auto max-w-2xl space-y-4 p-6">
-        <h1 className="text-2xl font-bold text-gray-900">Generate Flashcards</h1>
-        <p className="text-sm text-gray-500">Paste text to generate flashcard proposals with AI.</p>
+        <h1 className="text-2xl font-bold text-gray-900">Generuj fiszki</h1>
+        <p className="text-sm text-gray-500">Wklej tekst, by wygenerować propozycje fiszek z pomocą AI.</p>
         <div>
           <textarea
             className="w-full resize-none rounded-lg border border-gray-300 p-3 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:opacity-50"
             rows={10}
-            placeholder="Paste text to generate flashcards… (50–5000 characters)"
+            placeholder="Wklej tekst do wygenerowania fiszek… (50–5000 znaków)"
             value={text}
             onChange={(e) => {
               setText(e.target.value);
@@ -105,9 +111,9 @@ export function GenerateView() {
           <div className="mt-1 flex justify-between text-xs text-gray-400">
             <span>
               {charCount < MIN_CHARS
-                ? `${MIN_CHARS - charCount} more characters needed`
+                ? `Brakuje jeszcze ${MIN_CHARS - charCount} znaków`
                 : charCount > MAX_CHARS
-                  ? `${charCount - MAX_CHARS} characters over limit`
+                  ? `Przekroczono limit o ${charCount - MAX_CHARS} znaków`
                   : ""}
             </span>
             <span className={charCount > MAX_CHARS ? "text-red-500" : ""}>
@@ -116,7 +122,7 @@ export function GenerateView() {
           </div>
         </div>
         <Button onClick={handleGenerate} disabled={!canGenerate || isLoading} className="w-full">
-          {isLoading ? "Generating…" : "Generate cards"}
+          {isLoading ? "Generowanie…" : "Generuj fiszki"}
         </Button>
       </div>
     );
@@ -129,7 +135,7 @@ export function GenerateView() {
     return (
       <div className="mx-auto max-w-2xl space-y-4 p-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">Review Cards</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Przejrzyj fiszki</h1>
           <Button
             variant="outline"
             size="sm"
@@ -138,7 +144,7 @@ export function GenerateView() {
             }}
             disabled={isSaving}
           >
-            Regenerate
+            Generuj ponownie
           </Button>
         </div>
         <div className="space-y-3">
@@ -153,7 +159,7 @@ export function GenerateView() {
           ))}
         </div>
         <Button onClick={handleSave} disabled={acceptedCount === 0 || isSaving} className="w-full">
-          {isSaving ? "Saving…" : `Save ${acceptedCount} accepted card${acceptedCount !== 1 ? "s" : ""}`}
+          {isSaving ? "Zapisywanie…" : `Zapisz ${acceptedCount} ${cardForm(acceptedCount)}`}
         </Button>
       </div>
     );
@@ -164,12 +170,12 @@ export function GenerateView() {
       <div className="mx-auto max-w-2xl space-y-4 p-6 text-center">
         <p className="text-4xl">✅</p>
         <h1 className="text-2xl font-bold text-gray-900">
-          {savedCount} card{savedCount !== 1 ? "s" : ""} added to your deck!
+          Dodano {savedCount} {cardForm(savedCount)} do twojej talii!
         </h1>
         <div className="flex justify-center gap-3">
-          <Button onClick={handleGenerateMore}>Generate more</Button>
+          <Button onClick={handleGenerateMore}>Generuj więcej</Button>
           <Button variant="outline" asChild>
-            <a href="/dashboard">Go to dashboard</a>
+            <a href="/dashboard">Przejdź do dashboardu</a>
           </Button>
         </div>
       </div>
@@ -179,10 +185,10 @@ export function GenerateView() {
   return (
     <div className="mx-auto max-w-2xl space-y-4 p-6">
       <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-        <p className="text-sm font-medium text-red-700">Generation failed</p>
+        <p className="text-sm font-medium text-red-700">Generowanie nie powiodło się</p>
         <p className="mt-1 text-sm text-red-600">{errorMessage}</p>
       </div>
-      <Button onClick={handleRetry}>Retry</Button>
+      <Button onClick={handleRetry}>Spróbuj ponownie</Button>
     </div>
   );
 }

@@ -34,7 +34,7 @@ export function FormField({
 }: FormFieldProps) {
   return (
     <div>
-      <label htmlFor={id} className="mb-1 block text-sm text-blue-100/80">
+      <label id={`${id}-label`} htmlFor={id} className="mb-1 block text-sm text-blue-100/80">
         {label}
       </label>
       <div className="relative">
@@ -44,6 +44,7 @@ export function FormField({
           name={name ?? id}
           type={type}
           value={value}
+          aria-labelledby={`${id}-label`}
           onChange={(e) => {
             onChange(e.target.value);
           }}

@@ -43,7 +43,7 @@ export function CardReviewItem({ card, onAccept, onEdit, onReject }: Props) {
     return (
       <div className={cn("space-y-3 rounded-lg border-2 p-4", borderByStatus[card.status])}>
         <div>
-          <label className="text-xs font-semibold text-gray-500 uppercase">Front</label>
+          <label className="text-xs font-semibold text-gray-500 uppercase">Przód</label>
           <textarea
             className="mt-1 w-full resize-none rounded border border-gray-300 p-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
             rows={2}
@@ -54,7 +54,7 @@ export function CardReviewItem({ card, onAccept, onEdit, onReject }: Props) {
           />
         </div>
         <div>
-          <label className="text-xs font-semibold text-gray-500 uppercase">Back</label>
+          <label className="text-xs font-semibold text-gray-500 uppercase">Tył</label>
           <textarea
             className="mt-1 w-full resize-none rounded border border-gray-300 p-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
             rows={2}
@@ -66,10 +66,10 @@ export function CardReviewItem({ card, onAccept, onEdit, onReject }: Props) {
         </div>
         <div className="flex gap-2">
           <Button size="sm" onClick={saveEdit}>
-            Save edit
+            Zapisz
           </Button>
           <Button size="sm" variant="ghost" onClick={cancelEdit}>
-            Cancel
+            Anuluj
           </Button>
         </div>
       </div>
@@ -81,17 +81,17 @@ export function CardReviewItem({ card, onAccept, onEdit, onReject }: Props) {
   return (
     <div className={cn("rounded-lg border-2 p-4", borderByStatus[card.status])}>
       <div className="space-y-1">
-        <p className="text-xs font-semibold text-gray-500 uppercase">Front</p>
+        <p className="text-xs font-semibold text-gray-500 uppercase">Przód</p>
         <p className={cn("text-sm text-gray-900", card.status === "rejected" && "line-through")}>{card.front}</p>
       </div>
       <div className="mt-3 space-y-1">
-        <p className="text-xs font-semibold text-gray-500 uppercase">Back</p>
+        <p className="text-xs font-semibold text-gray-500 uppercase">Tył</p>
         <p className={cn("text-sm text-gray-900", card.status === "rejected" && "line-through")}>{card.back}</p>
       </div>
       <div className="mt-3 flex gap-2">
         {isAccepted ? (
           <span className="flex items-center gap-1 text-xs font-medium text-green-700">
-            ✓ {card.status === "edited" ? "Edited" : "Accepted"}
+            ✓ {card.status === "edited" ? "Edytowano" : "Zaakceptowano"}
           </span>
         ) : (
           <Button
@@ -101,7 +101,7 @@ export function CardReviewItem({ card, onAccept, onEdit, onReject }: Props) {
               onAccept(card.id);
             }}
           >
-            Accept
+            Akceptuj
           </Button>
         )}
         {card.status !== "rejected" && (
@@ -112,7 +112,7 @@ export function CardReviewItem({ card, onAccept, onEdit, onReject }: Props) {
               setEditing(true);
             }}
           >
-            Edit
+            Edytuj
           </Button>
         )}
         {card.status !== "rejected" ? (
@@ -124,7 +124,7 @@ export function CardReviewItem({ card, onAccept, onEdit, onReject }: Props) {
               onReject(card.id);
             }}
           >
-            Reject
+            Odrzuć
           </Button>
         ) : (
           <Button
@@ -134,7 +134,7 @@ export function CardReviewItem({ card, onAccept, onEdit, onReject }: Props) {
               onAccept(card.id);
             }}
           >
-            Restore
+            Przywróć
           </Button>
         )}
       </div>
