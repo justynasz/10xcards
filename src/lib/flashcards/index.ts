@@ -48,13 +48,13 @@ export async function listDueFlashcards(supabase: SupabaseClient, limit = 100): 
 }
 
 export async function getNextDueDate(supabase: SupabaseClient): Promise<string | null> {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from(TABLE)
     .select("due_date")
     .gt("due_date", new Date().toISOString())
     .order("due_date", { ascending: true })
     .limit(1);
-
+  if (error) throw new Error(error.message);
   return (data?.[0]?.due_date as string | undefined) ?? null;
 }
 
