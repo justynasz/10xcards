@@ -376,6 +376,6 @@ See per-phase Manual Verification sections above.
 
 #### Automated
 
-- [x] 3.1 Unit tests pass (all including 3 new): `npm test`
-- [x] 3.2 Type checking passes: `npm run build`
-- [x] 3.3 Linting passes: `npm run lint`
+- [x] 3.1 Unit tests pass (all including 3 new): `npm test` — 8a5de7a
+- [x] 3.2 Type checking passes: `npm run build` — 8a5de7a
+- [x] 3.3 Linting passes: `npm run lint` — 8a5de7a
