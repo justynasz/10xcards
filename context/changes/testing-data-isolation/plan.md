@@ -237,10 +237,10 @@ Mark Phase 3 of the rollout as "change opened" in §3, fill §6.5 IDOR test cook
 
 #### Automated
 
-- [x] 3.1 npm test — no regressions
-- [x] 3.2 npm run lint — passes
+- [x] 3.1 npm test — no regressions — 2d92b99
+- [x] 3.2 npm run lint — passes — 2d92b99
 
 #### Manual
 
-- [x] 3.3 §6.5 contains copy-pasteable IDOR + guard stubs
-- [x] 3.4 Phase 3 row in §3 shows correct status and change folder
+- [x] 3.3 §6.5 contains copy-pasteable IDOR + guard stubs — 2d92b99
+- [x] 3.4 Phase 3 row in §3 shows correct status and change folder — 2d92b99
