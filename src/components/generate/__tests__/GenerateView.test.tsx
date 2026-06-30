@@ -36,6 +36,56 @@ describe("GenerateView", () => {
     expect(screen.queryByText(/Przejrzyj fiszki/i)).toBeNull();
   });
 
+  it("R4a: retry after save error returns to review state, not idle", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValueOnce(makeJsonResponse({ cards: [{ front: "Q", back: "A" }] }, true, 200))
+        .mockResolvedValueOnce(makeJsonResponse({ error: "Failed to save cards. Please try again." }, false, 500)),
+    );
+
+    render(<GenerateView />);
+
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: ENOUGH_TEXT } });
+    fireEvent.click(screen.getByRole("button", { name: /Generuj fiszki/i }));
+
+    await screen.findByText(/Przejrzyj fiszki/i);
+    fireEvent.click(screen.getByRole("button", { name: /Akceptuj/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Zapisz/i }));
+
+    await screen.findByText(/Generowanie nie powiodło się/i);
+    fireEvent.click(screen.getByRole("button", { name: /Spróbuj ponownie/i }));
+
+    await screen.findByText(/Przejrzyj fiszki/i);
+    expect(screen.queryByRole("textbox")).toBeNull();
+  });
+
+  it("R4b: accepted card status preserved through saving→error→review cycle", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValueOnce(makeJsonResponse({ cards: [{ front: "Q", back: "A" }] }, true, 200))
+        .mockResolvedValueOnce(makeJsonResponse({ error: "Failed to save cards. Please try again." }, false, 500)),
+    );
+
+    render(<GenerateView />);
+
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: ENOUGH_TEXT } });
+    fireEvent.click(screen.getByRole("button", { name: /Generuj fiszki/i }));
+
+    await screen.findByText(/Przejrzyj fiszki/i);
+    fireEvent.click(screen.getByRole("button", { name: /Akceptuj/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Zapisz/i }));
+
+    await screen.findByText(/Generowanie nie powiodło się/i);
+    fireEvent.click(screen.getByRole("button", { name: /Spróbuj ponownie/i }));
+
+    await screen.findByText(/Zaakceptowano/i);
+    expect(screen.getByText(/Zapisz 1/i)).toBeDefined();
+  });
+
   it("R2: shows error state when /batch-create returns 500, never enters success state", async () => {
     vi.stubGlobal(
       "fetch",

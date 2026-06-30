@@ -243,25 +243,25 @@ Mark Phase 2 of the rollout as "change opened" in the §3 table, and fill in the
 
 #### Automated
 
-- [x] 1.1 npm test — all existing tests pass
-- [x] 1.2 npm run lint — 0 errors
+- [x] 1.1 npm test — all existing tests pass — 3dff043
+- [x] 1.2 npm run lint — 0 errors — 3dff043
 
 #### Manual
 
-- [x] 1.3 Save error → Retry → lands on review with accepted card visible
-- [x] 1.4 Generate error → Retry → lands on idle (text input)
+- [x] 1.3 Save error → Retry → lands on review with accepted card visible — 3dff043
+- [x] 1.4 Generate error → Retry → lands on idle (text input) — 3dff043
 
 ### Phase 2: R4 component tests
 
 #### Automated
 
-- [ ] 2.1 npm test — R4a and R4b pass
-- [ ] 2.2 npm run lint — 0 errors
+- [x] 2.1 npm test — R4a and R4b pass
+- [x] 2.2 npm run lint — 0 errors
 
 #### Manual
 
-- [ ] 2.3 R4a fails if handleRetry reverted to always-idle
-- [ ] 2.4 R4b fails if cards state reset on retry
+- [x] 2.3 R4a fails if handleRetry reverted to always-idle
+- [x] 2.4 R4b fails if cards state reset on retry
 
 ### Phase 3: R5 middleware unit test
 
