@@ -73,7 +73,7 @@ orchestrator updates Status as artifacts appear on disk.
 |---|------------|-----------------|---------------|------------|--------|---------------|
 | 1 | Core-loop integrity | Udowodnić że FSRS nie korumpuje harmonogramu, batch-save nie milczy po błędzie, AI error dociera do UI | R1 ✓ (`testing-core-loop-integrity`, impl_reviewed), R2, R3 | unit (extend), integration (new) | change opened | context/changes/testing-r2-r3-error-paths |
 | 2 | UI state + auth boundary | Udowodnić że GenerateView obsługuje błędy bez utraty kart; auth boundary trzyma się przy nowych trasach | R4, R5 | component tests (RTL), integration | change opened | context/changes/testing-ui-state-auth-boundary |
-| 3 | Data isolation + quality gates | Udowodnić cross-user rejection (IDOR); zamknąć obowiązkowe CI gates | R6 | integration (IDOR), CI gate wiring | not started | — |
+| 3 | Data isolation + quality gates | Udowodnić cross-user rejection (IDOR); zamknąć obowiązkowe CI gates | R6 | integration (IDOR), CI gate wiring | change opened | context/changes/testing-data-isolation |
 
 ---
 
@@ -310,7 +310,76 @@ it("redirects unauthenticated request to protected route", async () => {
 
 ### 6.5 Adding a cross-user isolation test
 
-TBD — see §3 Phase 3. Will document IDOR test pattern (two mock users, cross-user cardId → 403/404) and which Supabase client mock to use.
+Two patterns: (A) ownership-check unit test for a mutation route, (B) structural guard that enforces no route imports the service-role client.
+
+#### A) IDOR unit test — cross-user mutation returns 403
+
+**Location**: `src/pages/api/flashcards/__tests__/<route>.test.ts`
+
+**Pattern** — mock `getFlashcard` to return a card owned by a different user, assert 403 and that the destructive function was never called:
+
+```ts
+vi.mock("@/lib/supabase", () => ({ createClient: vi.fn().mockReturnValue({}) }));
+vi.mock("@/lib/flashcards", () => ({
+  getFlashcard: vi.fn(),
+  deleteFlashcard: vi.fn(),
+  // add updateFlashcard etc. as needed
+}));
+
+import { getFlashcard, deleteFlashcard } from "@/lib/flashcards";
+import { DELETE } from "../[id]";
+
+const OWNER_ID = "user-owner";
+const OTHER_ID = "user-other";
+const CARD_ID  = "card-1";
+
+function makeContext(userId: string, cardId = CARD_ID): APIContext {
+  return {
+    locals: { user: { id: userId } },
+    params: { id: cardId },
+    request: new Request(`http://localhost/api/flashcards/${cardId}`, { method: "DELETE" }),
+    cookies: {},
+  } as unknown as APIContext;
+}
+
+it("R6: returns 403 when card belongs to a different user", async () => {
+  vi.mocked(getFlashcard).mockResolvedValueOnce(
+    { id: CARD_ID, user_id: OTHER_ID } as Flashcard,
+  );
+  const response = await DELETE(makeContext(OWNER_ID));
+  expect(response.status).toBe(403);
+  expect(vi.mocked(deleteFlashcard)).not.toHaveBeenCalled();
+});
+```
+
+**Prerequisite**: the route must fetch the card and compare `card.user_id !== user.id` before executing the mutation (see `src/pages/api/flashcards/[id].ts`). The anon Supabase client + RLS is the primary isolation layer; this is the belt-and-suspenders app-level check.
+
+**Reference test**: [`src/pages/api/flashcards/__tests__/id.test.ts`](../../../src/pages/api/flashcards/__tests__/id.test.ts)
+
+#### B) Structural guard — no flashcard route imports createAdminClient
+
+**Location**: `src/__tests__/security.test.ts`
+
+**Pattern** — read route files from disk and assert none contains the service-role client import:
+
+```ts
+// @vitest-environment node
+import { readdirSync, readFileSync, statSync } from "node:fs";
+import { join } from "node:path";
+
+function collectTsFiles(dir: string): string[] { /* recursive */ }
+
+it("no API route imports createAdminClient", () => {
+  const apiDir = join(process.cwd(), "src", "pages", "api", "flashcards");
+  const violators = collectTsFiles(apiDir)
+    .filter((f) => readFileSync(f, "utf-8").includes("createAdminClient"));
+  expect(violators).toEqual([]);
+});
+```
+
+**Note**: scope the scan to `src/pages/api/flashcards/` — auth routes (`src/pages/api/auth/`) legitimately use `createAdminClient` to delete Supabase Auth users.
+
+**Reference test**: [`src/__tests__/security.test.ts`](../../../src/__tests__/security.test.ts)
 
 ### 6.6 Per-rollout-phase notes
 

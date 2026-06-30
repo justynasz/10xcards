@@ -226,21 +226,21 @@ Mark Phase 3 of the rollout as "change opened" in §3, fill §6.5 IDOR test cook
 
 #### Automated
 
-- [x] 2.1 npm test passes locally
-- [x] 2.2 npm run lint passes
+- [x] 2.1 npm test passes locally — 6e4012e
+- [x] 2.2 npm run lint passes — 6e4012e
 
 #### Manual
 
-- [x] 2.3 Break one test → npm test exits non-zero; restore → green
+- [x] 2.3 Break one test → npm test exits non-zero; restore → green — 6e4012e
 
 ### Phase 3: Update test-plan.md
 
 #### Automated
 
-- [ ] 3.1 npm test — no regressions
-- [ ] 3.2 npm run lint — passes
+- [x] 3.1 npm test — no regressions
+- [x] 3.2 npm run lint — passes
 
 #### Manual
 
-- [ ] 3.3 §6.5 contains copy-pasteable IDOR + guard stubs
-- [ ] 3.4 Phase 3 row in §3 shows correct status and change folder
+- [x] 3.3 §6.5 contains copy-pasteable IDOR + guard stubs
+- [x] 3.4 Phase 3 row in §3 shows correct status and change folder
