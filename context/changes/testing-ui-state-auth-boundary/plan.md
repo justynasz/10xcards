@@ -279,10 +279,10 @@ Mark Phase 2 of the rollout as "change opened" in the §3 table, and fill in the
 
 #### Automated
 
-- [x] 4.1 npm test — no regressions
-- [x] 4.2 npm run lint — 0 errors
+- [x] 4.1 npm test — no regressions — c49ff99
+- [x] 4.2 npm run lint — 0 errors — c49ff99
 
 #### Manual
 
-- [x] 4.3 §6.3 and §6.4 contain working copy-pasteable patterns
-- [x] 4.4 Phase 2 row in §3 shows correct status and change folder
+- [x] 4.3 §6.3 and §6.4 contain working copy-pasteable patterns — c49ff99
+- [x] 4.4 Phase 2 row in §3 shows correct status and change folder — c49ff99
