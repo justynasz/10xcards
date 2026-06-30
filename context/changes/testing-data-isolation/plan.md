@@ -215,23 +215,23 @@ Mark Phase 3 of the rollout as "change opened" in §3, fill §6.5 IDOR test cook
 
 #### Automated
 
-- [x] 1.1 npm test — all tests pass (44 total)
-- [x] 1.2 npm run lint — 0 errors
+- [x] 1.1 npm test — all tests pass (44 total) — 8a63565
+- [x] 1.2 npm run lint — 0 errors — 8a63565
 
 #### Manual
 
-- [x] 1.3 Revert 403 check → cross-user test fails; restore → all green
+- [x] 1.3 Revert 403 check → cross-user test fails; restore → all green — 8a63565
 
 ### Phase 2: CI gate — wire npm test
 
 #### Automated
 
-- [ ] 2.1 npm test passes locally
-- [ ] 2.2 npm run lint passes
+- [x] 2.1 npm test passes locally
+- [x] 2.2 npm run lint passes
 
 #### Manual
 
-- [ ] 2.3 Break one test → npm test exits non-zero; restore → green
+- [x] 2.3 Break one test → npm test exits non-zero; restore → green
 
 ### Phase 3: Update test-plan.md
 
