@@ -230,16 +230,16 @@ Use RTL with a mocked `fetch` to render `GenerateView` and assert that non-2xx r
 
 #### Automated
 
-- [x] 1.1 `npm install` exits 0; package.json updated with three new devDependencies
-- [x] 1.2 `npm test` passes — existing tests green, no regressions
-- [x] 1.3 `npm run lint` passes
+- [x] 1.1 `npm install` exits 0; package.json updated with three new devDependencies — e8f71be
+- [x] 1.2 `npm test` passes — existing tests green, no regressions — e8f71be
+- [x] 1.3 `npm run lint` passes — e8f71be
 
 ### Phase 2: API Route Unit Tests
 
 #### Automated
 
-- [ ] 2.1 `npm test` — 4 new tests pass (generate: 2, batch-create: 2)
-- [ ] 2.2 `npm run lint` passes
+- [x] 2.1 `npm test` — 4 new tests pass (generate: 2, batch-create: 2)
+- [x] 2.2 `npm run lint` passes
 
 ### Phase 3: GenerateView Component Tests (RTL)
 
