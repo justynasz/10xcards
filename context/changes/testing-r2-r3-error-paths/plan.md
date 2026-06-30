@@ -245,5 +245,5 @@ Use RTL with a mocked `fetch` to render `GenerateView` and assert that non-2xx r
 
 #### Automated
 
-- [x] 3.1 `npm test` — 2 new RTL tests pass (R3 generate error, R2 save error)
-- [x] 3.2 `npm run lint` passes
+- [x] 3.1 `npm test` — 2 new RTL tests pass (R3 generate error, R2 save error) — c333c67
+- [x] 3.2 `npm run lint` passes — c333c67

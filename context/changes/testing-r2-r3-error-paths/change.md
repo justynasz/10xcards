@@ -1,7 +1,7 @@
 ---
 change_id: testing-r2-r3-error-paths
 title: R2/R3 error-path tests — batch-save silent fail and AI malformed output
-status: implementing
+status: implemented
 created: 2026-06-30
 updated: 2026-06-30
 archived_at: null
