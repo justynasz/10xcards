@@ -41,7 +41,11 @@ export const PUT: APIRoute = async (context) => {
     return Response.json({ error: parsed.error.message }, { status: 400 });
   }
 
-  const existingCardForUpdate = await getFlashcard(supabase, id).catch(() => null);
+  const existingCardForUpdate = await getFlashcard(supabase, id).catch((err) => {
+    // eslint-disable-next-line no-console
+    console.error("[flashcards update] getFlashcard error:", err);
+    return null;
+  });
   if (!existingCardForUpdate) {
     return Response.json({ error: "Fiszka nie istnieje." }, { status: 404 });
   }
@@ -74,7 +78,11 @@ export const DELETE: APIRoute = async (context) => {
     return Response.json({ error: "Missing id" }, { status: 400 });
   }
 
-  const existingCardForDelete = await getFlashcard(supabase, id).catch(() => null);
+  const existingCardForDelete = await getFlashcard(supabase, id).catch((err) => {
+    // eslint-disable-next-line no-console
+    console.error("[flashcards delete] getFlashcard error:", err);
+    return null;
+  });
   if (!existingCardForDelete) {
     return Response.json({ error: "Fiszka nie istnieje." }, { status: 404 });
   }

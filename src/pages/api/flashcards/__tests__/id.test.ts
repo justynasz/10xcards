@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { APIContext } from "astro";
+import type { Flashcard } from "@/lib/flashcards/types";
 
 vi.mock("@/lib/supabase", () => ({
   createClient: vi.fn().mockReturnValue({}),
@@ -49,9 +50,7 @@ describe("DELETE /api/flashcards/[id]", () => {
   });
 
   it("R6: returns 403 when card belongs to a different user", async () => {
-    vi.mocked(getFlashcard).mockResolvedValueOnce(
-      otherCard as ReturnType<typeof getFlashcard> extends Promise<infer T> ? T : never,
-    );
+    vi.mocked(getFlashcard).mockResolvedValueOnce(otherCard as unknown as Flashcard);
 
     const response = await DELETE(makeDeleteContext(OWNER_ID));
 
@@ -60,9 +59,7 @@ describe("DELETE /api/flashcards/[id]", () => {
   });
 
   it("returns 200 when card belongs to the authenticated user", async () => {
-    vi.mocked(getFlashcard).mockResolvedValueOnce(
-      ownCard as ReturnType<typeof getFlashcard> extends Promise<infer T> ? T : never,
-    );
+    vi.mocked(getFlashcard).mockResolvedValueOnce(ownCard as unknown as Flashcard);
     vi.mocked(deleteFlashcard).mockResolvedValueOnce(undefined);
 
     const response = await DELETE(makeDeleteContext(OWNER_ID));
@@ -78,9 +75,7 @@ describe("PUT /api/flashcards/[id]", () => {
   });
 
   it("R6: returns 403 when card belongs to a different user", async () => {
-    vi.mocked(getFlashcard).mockResolvedValueOnce(
-      otherCard as ReturnType<typeof getFlashcard> extends Promise<infer T> ? T : never,
-    );
+    vi.mocked(getFlashcard).mockResolvedValueOnce(otherCard as unknown as Flashcard);
 
     const response = await PUT(makePutContext(OWNER_ID, { front: "New Q" }));
 
@@ -89,14 +84,8 @@ describe("PUT /api/flashcards/[id]", () => {
   });
 
   it("returns 200 when card belongs to the authenticated user", async () => {
-    vi.mocked(getFlashcard).mockResolvedValueOnce(
-      ownCard as ReturnType<typeof getFlashcard> extends Promise<infer T> ? T : never,
-    );
-    vi.mocked(updateFlashcard).mockResolvedValueOnce({ ...ownCard, front: "New Q" } as ReturnType<
-      typeof updateFlashcard
-    > extends Promise<infer T>
-      ? T
-      : never);
+    vi.mocked(getFlashcard).mockResolvedValueOnce(ownCard as unknown as Flashcard);
+    vi.mocked(updateFlashcard).mockResolvedValueOnce({ ...ownCard, front: "New Q" } as unknown as Flashcard);
 
     const response = await PUT(makePutContext(OWNER_ID, { front: "New Q" }));
 
