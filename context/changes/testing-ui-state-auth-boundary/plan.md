@@ -255,25 +255,25 @@ Mark Phase 2 of the rollout as "change opened" in the §3 table, and fill in the
 
 #### Automated
 
-- [x] 2.1 npm test — R4a and R4b pass
-- [x] 2.2 npm run lint — 0 errors
+- [x] 2.1 npm test — R4a and R4b pass — c2b101f
+- [x] 2.2 npm run lint — 0 errors — c2b101f
 
 #### Manual
 
-- [x] 2.3 R4a fails if handleRetry reverted to always-idle
-- [x] 2.4 R4b fails if cards state reset on retry
+- [x] 2.3 R4a fails if handleRetry reverted to always-idle — c2b101f
+- [x] 2.4 R4b fails if cards state reset on retry — c2b101f
 
 ### Phase 3: R5 middleware unit test
 
 #### Automated
 
-- [ ] 3.1 npm test — middleware tests pass
-- [ ] 3.2 npm run lint — 0 errors
+- [x] 3.1 npm test — middleware tests pass
+- [x] 3.2 npm run lint — 0 errors
 
 #### Manual
 
-- [ ] 3.3 Test (a) fails if /generate removed from PROTECTED_ROUTES
-- [ ] 3.4 Test (b) fails if /api added to PROTECTED_ROUTES
+- [x] 3.3 Test (a) fails if /generate removed from PROTECTED_ROUTES
+- [x] 3.4 Test (b) fails if /api added to PROTECTED_ROUTES
 
 ### Phase 4: Update test-plan.md
 
