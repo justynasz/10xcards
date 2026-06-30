@@ -7,7 +7,7 @@ test.use({
 test("generate flashcards from text (risk: AI generation failure)", async ({ page }) => {
   await page.goto("/generate");
 
-  console.log(await page.url());
+  console.log(page.url());
 
   await expect(page.getByRole("heading", { name: "Generuj fiszki" })).toBeVisible();
 

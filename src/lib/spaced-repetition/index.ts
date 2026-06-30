@@ -19,6 +19,7 @@ export function computeNextCard(card: Flashcard, rating: SRRating): UpdateFlashc
   };
 
   const ratingEnum = Rating[rating as keyof typeof Rating] as Grade;
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (ratingEnum === undefined) {
     throw new Error(`Invalid rating: "${rating}"`);
   }

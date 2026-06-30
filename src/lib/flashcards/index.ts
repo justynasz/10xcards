@@ -55,7 +55,7 @@ export async function getNextDueDate(supabase: SupabaseClient): Promise<string |
     .order("due_date", { ascending: true })
     .limit(1);
   if (error) throw new Error(error.message);
-  return (data?.[0]?.due_date as string | undefined) ?? null;
+  return (data[0]?.due_date as string | undefined) ?? null;
 }
 
 export async function batchCreateFlashcards(
