@@ -20,6 +20,7 @@ export function GenerateView() {
   const [cards, setCards] = useState<CardEntry[]>([]);
   const [savedCount, setSavedCount] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
+  const [errorSource, setErrorSource] = useState<"generate" | "save" | null>(null);
 
   const acceptedCards = cards.filter((c) => c.status === "accepted" || c.status === "edited");
 
@@ -55,6 +56,7 @@ export function GenerateView() {
       setViewState("review");
     } catch (err) {
       setErrorMessage(err instanceof Error ? err.message : "Nieznany błąd");
+      setErrorSource("generate");
       setViewState("error");
     }
   }
@@ -73,13 +75,15 @@ export function GenerateView() {
       setViewState("success");
     } catch (err) {
       setErrorMessage(err instanceof Error ? err.message : "Nieznany błąd");
+      setErrorSource("save");
       setViewState("error");
     }
   }
 
   function handleRetry() {
     setErrorMessage("");
-    setViewState("idle");
+    setViewState(errorSource === "save" ? "review" : "idle");
+    setErrorSource(null);
   }
 
   function handleGenerateMore() {
