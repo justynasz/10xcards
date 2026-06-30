@@ -5,7 +5,19 @@ vi.mock("@/lib/supabase", () => ({ createClient: vi.fn().mockReturnValue(null) }
 
 import { onRequest } from "../middleware";
 
-function makeContext(pathname: string) {
+interface TestContext {
+  url: URL;
+  locals: Record<string, unknown>;
+  request: Request;
+  redirect: (url: string) => Response;
+  cookies: Record<string, unknown>;
+}
+
+type TestHandler = (context: TestContext, next: () => Promise<Response>) => Promise<Response>;
+
+const handler = onRequest as unknown as TestHandler;
+
+function makeContext(pathname: string): TestContext {
   return {
     url: new URL("http://localhost" + pathname),
     locals: {},
@@ -23,7 +35,7 @@ describe("middleware onRequest", () => {
   it("redirects unauthenticated request to /generate", async () => {
     const next = vi.fn().mockResolvedValue(new Response("ok", { status: 200 }));
 
-    const response = await (onRequest as Function)(makeContext("/generate"), next);
+    const response = await handler(makeContext("/generate"), next);
 
     expect(response.status).toBe(302);
     expect(response.headers.get("location")).toContain("/auth/signin");
@@ -33,7 +45,7 @@ describe("middleware onRequest", () => {
   it("passes through unauthenticated request to /api/flashcards/generate", async () => {
     const next = vi.fn().mockResolvedValue(new Response("ok", { status: 200 }));
 
-    await (onRequest as Function)(makeContext("/api/flashcards/generate"), next);
+    await handler(makeContext("/api/flashcards/generate"), next);
 
     expect(next).toHaveBeenCalled();
   });

@@ -72,7 +72,7 @@ orchestrator updates Status as artifacts appear on disk.
 | # | Phase name | Goal (one line) | Risks covered | Test types | Status | Change folder |
 |---|------------|-----------------|---------------|------------|--------|---------------|
 | 1 | Core-loop integrity | Udowodnić że FSRS nie korumpuje harmonogramu, batch-save nie milczy po błędzie, AI error dociera do UI | R1 ✓ (`testing-core-loop-integrity`, impl_reviewed), R2, R3 | unit (extend), integration (new) | change opened | context/changes/testing-r2-r3-error-paths |
-| 2 | UI state + auth boundary | Udowodnić że GenerateView obsługuje błędy bez utraty kart; auth boundary trzyma się przy nowych trasach | R4, R5 | component tests (RTL), integration | not started | — |
+| 2 | UI state + auth boundary | Udowodnić że GenerateView obsługuje błędy bez utraty kart; auth boundary trzyma się przy nowych trasach | R4, R5 | component tests (RTL), integration | change opened | context/changes/testing-ui-state-auth-boundary |
 | 3 | Data isolation + quality gates | Udowodnić cross-user rejection (IDOR); zamknąć obowiązkowe CI gates | R6 | integration (IDOR), CI gate wiring | not started | — |
 
 ---
@@ -180,11 +180,133 @@ expect(dueMs).toBeLessThan(before + 90_000);
 
 ### 6.3 Adding a component test for a React island
 
-TBD — see §3 Phase 2. Will document RTL setup, ViewState transition testing pattern, fetch mock approach, and `npm test` run command.
+**Location**: `src/components/<feature>/__tests__/<Component>.test.tsx` — co-located with the component.
 
-### 6.4 Adding a test for a new API route
+**Required docblock** (vitest 4 glob doesn't match absolute paths — environmentMatchGlobs doesn't work):
+```ts
+// @vitest-environment jsdom
+```
+First line of every component test file, before any imports.
 
-TBD — see §3 Phase 2. Will document auth guard test pattern (missing user → 401) and how to extend coverage to new routes added in S-03.
+**Imports**:
+```ts
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { MyComponent } from "../MyComponent";
+```
+
+**afterEach cleanup** (RTL does NOT auto-cleanup in vitest):
+```ts
+afterEach(() => {
+  cleanup();
+  vi.unstubAllGlobals();
+});
+```
+
+**Mocking fetch** — use `vi.stubGlobal`, never import fetch directly:
+```ts
+function makeJsonResponse(body: unknown, ok: boolean, status: number): Response {
+  return { ok, status, json: () => Promise.resolve(body) } as unknown as Response;
+}
+
+vi.stubGlobal("fetch", vi.fn()
+  .mockResolvedValueOnce(makeJsonResponse({ cards: [...] }, true, 200))
+  .mockResolvedValueOnce(makeJsonResponse({ error: "..." }, false, 500))
+);
+```
+
+**Button disabled check** — `jest-dom` is NOT installed; use the DOM property directly:
+```ts
+expect((screen.getByRole("button", { name: /Label/i }) as HTMLButtonElement).disabled).toBe(false);
+```
+
+**Async assertions** — always `findBy*` (not `getBy*`) after user actions that trigger state changes:
+```ts
+await screen.findByText(/Expected text/i);
+```
+
+**Reference test**: [`src/components/generate/__tests__/GenerateView.test.tsx`](../../../src/components/generate/__tests__/GenerateView.test.tsx)
+
+### 6.4 Adding a test for a new API route or middleware
+
+#### A) Astro API route unit test
+
+**Location**: `src/pages/api/<module>/__tests__/<route>.test.ts`
+
+**Pattern** — import the exported handler directly, no HTTP server needed:
+```ts
+import { afterEach, describe, expect, it, vi } from "vitest";
+import type { APIContext } from "astro";
+
+vi.mock("@/lib/supabase", () => ({ createClient: vi.fn().mockReturnValue({}) }));
+vi.mock("@/lib/myService", () => ({ myFn: vi.fn() }));
+
+import { myFn } from "@/lib/myService";
+import { POST } from "../my-route";
+
+function makeContext(user: unknown, body: unknown): APIContext {
+  return {
+    locals: { user },
+    request: new Request("http://localhost/api/...", {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" },
+    }),
+    cookies: {},
+  } as unknown as APIContext;
+}
+
+describe("POST /api/...", () => {
+  afterEach(() => { vi.clearAllMocks(); });
+
+  it("returns 401 when no user is authenticated", async () => {
+    const response = await POST(makeContext(null, { ... }));
+    expect(response.status).toBe(401);
+  });
+
+  it("returns 500 when service throws", async () => {
+    vi.mocked(myFn).mockRejectedValueOnce(new Error("db error"));
+    const response = await POST(makeContext({ id: "user-1" }, { ... }));
+    expect(response.status).toBe(500);
+  });
+});
+```
+
+**Note**: `vi.mock(...)` calls must appear before imports (vitest hoisting). For `astro:env/server`, mock as `vi.mock("astro:env/server", () => ({ MY_KEY: "test-key" }))`.
+
+**Reference tests**: [`src/pages/api/flashcards/__tests__/batch-create.test.ts`](../../../src/pages/api/flashcards/__tests__/batch-create.test.ts), [`src/pages/api/flashcards/__tests__/generate.test.ts`](../../../src/pages/api/flashcards/__tests__/generate.test.ts)
+
+#### B) Middleware unit test
+
+**Location**: `src/__tests__/middleware.test.ts`
+
+**Pattern** — mock `defineMiddleware` as identity, mock `createClient` to return null (no session):
+```ts
+vi.mock("astro:middleware", () => ({ defineMiddleware: (fn: unknown) => fn }));
+vi.mock("@/lib/supabase", () => ({ createClient: vi.fn().mockReturnValue(null) }));
+
+import { onRequest } from "../middleware";
+
+function makeContext(pathname: string) {
+  return {
+    url: new URL("http://localhost" + pathname),
+    locals: {},
+    request: new Request("http://localhost" + pathname),
+    redirect: (url: string) => new Response(null, { status: 302, headers: { Location: url } }),
+    cookies: {},
+  };
+}
+
+it("redirects unauthenticated request to protected route", async () => {
+  const next = vi.fn().mockResolvedValue(new Response("ok", { status: 200 }));
+  const response = await (onRequest as Function)(makeContext("/generate"), next);
+  expect(response.status).toBe(302);
+  expect(response.headers.get("location")).toContain("/auth/signin");
+  expect(next).not.toHaveBeenCalled();
+});
+```
+
+**Reference test**: [`src/__tests__/middleware.test.ts`](../../../src/__tests__/middleware.test.ts)
 
 ### 6.5 Adding a cross-user isolation test
 

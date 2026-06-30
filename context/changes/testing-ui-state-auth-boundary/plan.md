@@ -267,22 +267,22 @@ Mark Phase 2 of the rollout as "change opened" in the §3 table, and fill in the
 
 #### Automated
 
-- [x] 3.1 npm test — middleware tests pass
-- [x] 3.2 npm run lint — 0 errors
+- [x] 3.1 npm test — middleware tests pass — 80b3037
+- [x] 3.2 npm run lint — 0 errors — 80b3037
 
 #### Manual
 
-- [x] 3.3 Test (a) fails if /generate removed from PROTECTED_ROUTES
-- [x] 3.4 Test (b) fails if /api added to PROTECTED_ROUTES
+- [x] 3.3 Test (a) fails if /generate removed from PROTECTED_ROUTES — 80b3037
+- [x] 3.4 Test (b) fails if /api added to PROTECTED_ROUTES — 80b3037
 
 ### Phase 4: Update test-plan.md
 
 #### Automated
 
-- [ ] 4.1 npm test — no regressions
-- [ ] 4.2 npm run lint — 0 errors
+- [x] 4.1 npm test — no regressions
+- [x] 4.2 npm run lint — 0 errors
 
 #### Manual
 
-- [ ] 4.3 §6.3 and §6.4 contain working copy-pasteable patterns
-- [ ] 4.4 Phase 2 row in §3 shows correct status and change folder
+- [x] 4.3 §6.3 and §6.4 contain working copy-pasteable patterns
+- [x] 4.4 Phase 2 row in §3 shows correct status and change folder
