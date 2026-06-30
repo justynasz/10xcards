@@ -238,12 +238,12 @@ Use RTL with a mocked `fetch` to render `GenerateView` and assert that non-2xx r
 
 #### Automated
 
-- [x] 2.1 `npm test` — 4 new tests pass (generate: 2, batch-create: 2)
-- [x] 2.2 `npm run lint` passes
+- [x] 2.1 `npm test` — 4 new tests pass (generate: 2, batch-create: 2) — 6bc6e42
+- [x] 2.2 `npm run lint` passes — 6bc6e42
 
 ### Phase 3: GenerateView Component Tests (RTL)
 
 #### Automated
 
-- [ ] 3.1 `npm test` — 2 new RTL tests pass (R3 generate error, R2 save error)
-- [ ] 3.2 `npm run lint` passes
+- [x] 3.1 `npm test` — 2 new RTL tests pass (R3 generate error, R2 save error)
+- [x] 3.2 `npm run lint` passes
