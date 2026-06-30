@@ -71,7 +71,7 @@ orchestrator updates Status as artifacts appear on disk.
 
 | # | Phase name | Goal (one line) | Risks covered | Test types | Status | Change folder |
 |---|------------|-----------------|---------------|------------|--------|---------------|
-| 1 | Core-loop integrity | Udowodnić że FSRS nie korumpuje harmonogramu, batch-save nie milczy po błędzie, AI error dociera do UI | R1, R2, R3 | unit (extend), integration (new) | change opened | context/changes/testing-core-loop-integrity |
+| 1 | Core-loop integrity | Udowodnić że FSRS nie korumpuje harmonogramu, batch-save nie milczy po błędzie, AI error dociera do UI | R1 ✓ (`testing-core-loop-integrity`, impl_reviewed), R2, R3 | unit (extend), integration (new) | change opened | context/changes/testing-r2-r3-error-paths |
 | 2 | UI state + auth boundary | Udowodnić że GenerateView obsługuje błędy bez utraty kart; auth boundary trzyma się przy nowych trasach | R4, R5 | component tests (RTL), integration | not started | — |
 | 3 | Data isolation + quality gates | Udowodnić cross-user rejection (IDOR); zamknąć obowiązkowe CI gates | R6 | integration (IDOR), CI gate wiring | not started | — |
 
@@ -85,7 +85,7 @@ The classic test base for this project. AI-native tools (if any) carry a
 | Layer | Tool | Version | Notes |
 |-------|------|---------|-------|
 | unit + integration | vitest | ^4.1.7 | configured via `package.json`; `npm test` runs once, `npm run test:watch` in dev |
-| component tests | @testing-library/react + @testing-library/user-event | none yet — see §3 Phase 2 | needed for GenerateView state-machine tests; to install in Phase 2 |
+| component tests | @testing-library/react + @testing-library/user-event | installed in Phase 1 (testing-r2-r3-error-paths); see §3 Phase 1 for component test cookbook (§6.3) | needed for GenerateView state-machine tests; installed early to cover R2/R3 UI layer |
 | API/fetch mocking | vi.stubGlobal("fetch") | built-in vitest | current pattern in openrouter tests; sufficient for unit layer |
 | e2e | none yet | — | no Playwright/Cypress configured; not required for current risk map |
 | accessibility | none | — | not in current risk map |
