@@ -1,7 +1,7 @@
 ---
 change_id: flashcard-crud
 title: Manual flashcard create, edit, and delete in the list view
-status: implemented
+status: impl_reviewed
 created: 2026-06-30
 updated: 2026-06-30
 archived_at: null
