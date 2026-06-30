@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { GenerateView } from "../GenerateView";
 
 function makeJsonResponse(body: unknown, ok: boolean, status: number): Response {
@@ -15,6 +15,7 @@ const ENOUGH_TEXT = "a".repeat(50);
 
 describe("GenerateView", () => {
   afterEach(() => {
+    cleanup();
     vi.unstubAllGlobals();
   });
 
@@ -27,6 +28,7 @@ describe("GenerateView", () => {
     render(<GenerateView />);
 
     fireEvent.change(screen.getByRole("textbox"), { target: { value: ENOUGH_TEXT } });
+    expect(screen.getByRole("button", { name: /Generuj fiszki/i }).disabled).toBe(false);
     fireEvent.click(screen.getByRole("button", { name: /Generuj fiszki/i }));
 
     await screen.findByText(/Generowanie nie powiodło się/i);
@@ -46,6 +48,7 @@ describe("GenerateView", () => {
     render(<GenerateView />);
 
     fireEvent.change(screen.getByRole("textbox"), { target: { value: ENOUGH_TEXT } });
+    expect(screen.getByRole("button", { name: /Generuj fiszki/i }).disabled).toBe(false);
     fireEvent.click(screen.getByRole("button", { name: /Generuj fiszki/i }));
 
     await screen.findByText(/Przejrzyj fiszki/i);

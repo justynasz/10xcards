@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { APIContext } from "astro";
 
 vi.mock("@/lib/supabase", () => ({
@@ -27,6 +27,10 @@ function makeContext(user: unknown, body: unknown): APIContext {
 }
 
 describe("POST /api/flashcards/batch-create", () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("returns 401 when no user is authenticated", async () => {
     const response = await POST(makeContext(null, { cards: validCards }));
 

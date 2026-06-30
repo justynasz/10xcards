@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { APIContext } from "astro";
 
 vi.mock("astro:env/server", () => ({
@@ -25,6 +25,10 @@ function makeContext(body: unknown): APIContext {
 }
 
 describe("POST /api/flashcards/generate", () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("returns 500 when generateFlashcards throws a generic error", async () => {
     vi.mocked(generateFlashcards).mockRejectedValueOnce(new Error("AI returned invalid JSON: [bad content]"));
 

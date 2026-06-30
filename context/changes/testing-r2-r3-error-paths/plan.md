@@ -53,7 +53,7 @@ Route tests call the exported `POST` function directly with a minimal `APIContex
 
 ## Critical Implementation Details
 
-- **`environmentMatchGlobs` vs global `environment`**: set jsdom only for `src/components/**` — route and service tests should run in the default (node) environment. Mixing environments in one global setting causes false DOM globals to leak into non-DOM tests.
+- **`environmentMatchGlobs` nie działa w vitest 4 z pełną ścieżką** (impl-review F1): glob `"src/components/**"` nie matchuje absolutnej ścieżki pliku w vitest 4. Użyj zamiast tego docblock `// @vitest-environment jsdom` na górze każdego pliku testowego komponentu. Każdy nowy plik w `src/components/**/__tests__/` musi dodać ten docblock ręcznie.
 - **`astro:env/server` mock placement**: `vi.mock("astro:env/server", ...)` must be at module scope (top of file, before imports) so vitest hoists it before the route module is loaded.
 
 ---
