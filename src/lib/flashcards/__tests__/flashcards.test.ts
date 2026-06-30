@@ -74,6 +74,11 @@ describe("createFlashcard", () => {
     expect(supabase.insert).toHaveBeenCalledWith({ front: card.front, back: card.back });
     expect(result).toEqual(card);
   });
+
+  it("throws on supabase error", async () => {
+    const supabase = makeSupabase({ data: null, error: new Error("db error") });
+    await expect(createFlashcard(supabase as never, { front: "Q", back: "A" })).rejects.toThrow("db error");
+  });
 });
 
 describe("updateFlashcard", () => {
@@ -88,6 +93,11 @@ describe("updateFlashcard", () => {
     expect(supabase.eq).toHaveBeenCalledWith("id", "card-1");
     expect(result).toEqual(updated);
   });
+
+  it("throws on supabase error", async () => {
+    const supabase = makeSupabase({ data: null, error: new Error("db error") });
+    await expect(updateFlashcard(supabase as never, "card-1", { front: "Q" })).rejects.toThrow("db error");
+  });
 });
 
 describe("deleteFlashcard", () => {
@@ -96,6 +106,11 @@ describe("deleteFlashcard", () => {
 
     await expect(deleteFlashcard(supabase as never, "card-1")).resolves.toBeUndefined();
     expect(supabase.eq).toHaveBeenCalledWith("id", "card-1");
+  });
+
+  it("throws on supabase error", async () => {
+    const supabase = makeSupabase({ data: null, error: new Error("db error") });
+    await expect(deleteFlashcard(supabase as never, "card-1")).rejects.toThrow("db error");
   });
 });
 

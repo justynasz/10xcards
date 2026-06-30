@@ -361,21 +361,21 @@ See per-phase Manual Verification sections above.
 
 #### Automated
 
-- [x] 2.1 Type checking passes: `npm run build`
-- [x] 2.2 Linting passes: `npm run lint`
+- [x] 2.1 Type checking passes: `npm run build` — db0c09d
+- [x] 2.2 Linting passes: `npm run lint` — db0c09d
 
 #### Manual
 
-- [x] 2.3 Create form is visible at top of `/flashcards` after loading
-- [x] 2.4 Creating a card adds it to the top of the list without reload
-- [x] 2.5 Editing a card updates it in place without reload
-- [x] 2.6 Cancelling edit restores original text
-- [x] 2.7 Delete confirmation ("Na pewno?") appears; "Nie" cancels; "Tak" removes card
+- [x] 2.3 Create form is visible at top of `/flashcards` after loading — db0c09d
+- [x] 2.4 Creating a card adds it to the top of the list without reload — db0c09d
+- [x] 2.5 Editing a card updates it in place without reload — db0c09d
+- [x] 2.6 Cancelling edit restores original text — db0c09d
+- [x] 2.7 Delete confirmation ("Na pewno?") appears; "Nie" cancels; "Tak" removes card — db0c09d
 
 ### Phase 3: Unit Tests — error paths
 
 #### Automated
 
-- [ ] 3.1 Unit tests pass (all including 3 new): `npm test`
-- [ ] 3.2 Type checking passes: `npm run build`
-- [ ] 3.3 Linting passes: `npm run lint`
+- [x] 3.1 Unit tests pass (all including 3 new): `npm test`
+- [x] 3.2 Type checking passes: `npm run build`
+- [x] 3.3 Linting passes: `npm run lint`
