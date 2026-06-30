@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase";
-import { updateFlashcard, deleteFlashcard } from "@/lib/flashcards";
+import { getFlashcard, updateFlashcard, deleteFlashcard } from "@/lib/flashcards";
 
 export const prerender = false;
 
@@ -41,6 +41,14 @@ export const PUT: APIRoute = async (context) => {
     return Response.json({ error: parsed.error.message }, { status: 400 });
   }
 
+  const existingCardForUpdate = await getFlashcard(supabase, id).catch(() => null);
+  if (!existingCardForUpdate) {
+    return Response.json({ error: "Fiszka nie istnieje." }, { status: 404 });
+  }
+  if (existingCardForUpdate.user_id !== context.locals.user.id) {
+    return Response.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   try {
     const card = await updateFlashcard(supabase, id, parsed.data);
     return Response.json({ card });
@@ -64,6 +72,14 @@ export const DELETE: APIRoute = async (context) => {
   const { id } = context.params;
   if (!id) {
     return Response.json({ error: "Missing id" }, { status: 400 });
+  }
+
+  const existingCardForDelete = await getFlashcard(supabase, id).catch(() => null);
+  if (!existingCardForDelete) {
+    return Response.json({ error: "Fiszka nie istnieje." }, { status: 404 });
+  }
+  if (existingCardForDelete.user_id !== context.locals.user.id) {
+    return Response.json({ error: "Forbidden" }, { status: 403 });
   }
 
   try {
