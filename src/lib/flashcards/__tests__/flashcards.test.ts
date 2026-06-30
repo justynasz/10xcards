@@ -90,6 +90,7 @@ describe("updateFlashcard", () => {
       front: "Updated question?",
     });
 
+    expect(supabase.update).toHaveBeenCalledWith({ front: "Updated question?" });
     expect(supabase.eq).toHaveBeenCalledWith("id", "card-1");
     expect(result).toEqual(updated);
   });
@@ -105,6 +106,7 @@ describe("deleteFlashcard", () => {
     const supabase = makeSupabase({ data: null, error: null });
 
     await expect(deleteFlashcard(supabase as never, "card-1")).resolves.toBeUndefined();
+    expect(supabase.delete).toHaveBeenCalled();
     expect(supabase.eq).toHaveBeenCalledWith("id", "card-1");
   });
 

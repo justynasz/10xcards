@@ -5,10 +5,14 @@ import { updateFlashcard, deleteFlashcard } from "@/lib/flashcards";
 
 export const prerender = false;
 
-const updateSchema = z.object({
-  front: z.string().min(1).max(500).optional(),
-  back: z.string().min(1).max(500).optional(),
-});
+const updateSchema = z
+  .object({
+    front: z.string().min(1).max(500).optional(),
+    back: z.string().min(1).max(500).optional(),
+  })
+  .refine((d) => d.front !== undefined || d.back !== undefined, {
+    message: "Wymagane co najmniej jedno pole.",
+  });
 
 export const PUT: APIRoute = async (context) => {
   if (!context.locals.user) {

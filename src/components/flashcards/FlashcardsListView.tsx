@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import type { Flashcard } from "@/lib/flashcards/types";
 
@@ -19,10 +18,12 @@ export function FlashcardsListView() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editFront, setEditFront] = useState("");
   const [editBack, setEditBack] = useState("");
+  const [saving, setSaving] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
 
   // inline delete confirmation
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -76,6 +77,7 @@ export function FlashcardsListView() {
   }
 
   async function handleSaveEdit(id: string) {
+    setSaving(true);
     setEditError(null);
     try {
       const r = await fetch(`/api/flashcards/${id}`, {
@@ -95,6 +97,8 @@ export function FlashcardsListView() {
       }
     } catch {
       setEditError("Nie udało się zaktualizować fiszki.");
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -109,6 +113,7 @@ export function FlashcardsListView() {
   }
 
   async function handleConfirmDelete(id: string) {
+    setDeleting(true);
     setDeleteError(null);
     try {
       const r = await fetch(`/api/flashcards/${id}`, { method: "DELETE" });
@@ -121,6 +126,8 @@ export function FlashcardsListView() {
       setDeletingId(null);
     } catch {
       setDeleteError("Nie udało się usunąć fiszki.");
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -155,8 +162,11 @@ export function FlashcardsListView() {
         <h2 className="mb-3 text-sm font-semibold text-gray-700">Nowa fiszka</h2>
         <div className="space-y-3">
           <div>
-            <label className="text-xs font-semibold text-gray-500 uppercase">Przód</label>
+            <label htmlFor="new-front" className="text-xs font-semibold text-gray-500 uppercase">
+              Przód
+            </label>
             <textarea
+              id="new-front"
               className="mt-1 w-full resize-none rounded border border-gray-300 p-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
               rows={2}
               maxLength={500}
@@ -168,8 +178,11 @@ export function FlashcardsListView() {
             />
           </div>
           <div>
-            <label className="text-xs font-semibold text-gray-500 uppercase">Tył</label>
+            <label htmlFor="new-back" className="text-xs font-semibold text-gray-500 uppercase">
+              Tył
+            </label>
             <textarea
+              id="new-back"
               className="mt-1 w-full resize-none rounded border border-gray-300 p-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
               rows={2}
               maxLength={500}
@@ -206,8 +219,14 @@ export function FlashcardsListView() {
                 <div key={card.id} className="rounded-lg border-2 border-blue-400 bg-blue-50 p-4">
                   <div className="space-y-3">
                     <div>
-                      <label className="text-xs font-semibold text-gray-500 uppercase">Przód</label>
+                      <label
+                        htmlFor={`edit-front-${card.id}`}
+                        className="text-xs font-semibold text-gray-500 uppercase"
+                      >
+                        Przód
+                      </label>
                       <textarea
+                        id={`edit-front-${card.id}`}
                         className="mt-1 w-full resize-none rounded border border-gray-300 p-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
                         rows={2}
                         maxLength={500}
@@ -218,8 +237,11 @@ export function FlashcardsListView() {
                       />
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-gray-500 uppercase">Tył</label>
+                      <label htmlFor={`edit-back-${card.id}`} className="text-xs font-semibold text-gray-500 uppercase">
+                        Tył
+                      </label>
                       <textarea
+                        id={`edit-back-${card.id}`}
                         className="mt-1 w-full resize-none rounded border border-gray-300 p-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
                         rows={2}
                         maxLength={500}
@@ -237,10 +259,10 @@ export function FlashcardsListView() {
                     <div className="flex gap-2">
                       <Button
                         size="sm"
-                        disabled={!editFront.trim() || !editBack.trim()}
+                        disabled={!editFront.trim() || !editBack.trim() || saving}
                         onClick={() => void handleSaveEdit(card.id)}
                       >
-                        Zapisz
+                        {saving ? "Zapisywanie…" : "Zapisz"}
                       </Button>
                       <Button size="sm" variant="ghost" onClick={cancelEdit}>
                         Anuluj
@@ -269,8 +291,13 @@ export function FlashcardsListView() {
                   )}
                   <div className="mt-3 flex items-center gap-3">
                     <span className="text-sm text-gray-700">Na pewno?</span>
-                    <Button size="sm" variant="destructive" onClick={() => void handleConfirmDelete(card.id)}>
-                      Tak
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      disabled={deleting}
+                      onClick={() => void handleConfirmDelete(card.id)}
+                    >
+                      {deleting ? "Usuwanie…" : "Tak"}
                     </Button>
                     <Button
                       size="sm"
@@ -287,7 +314,7 @@ export function FlashcardsListView() {
             }
 
             return (
-              <div key={card.id} className={cn("rounded-lg border border-gray-200 bg-white p-4 shadow-sm")}>
+              <div key={card.id} className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
                 <div className="space-y-1">
                   <p className="text-xs font-semibold text-gray-500 uppercase">Przód</p>
                   <p className="text-sm text-gray-900">{card.front}</p>
