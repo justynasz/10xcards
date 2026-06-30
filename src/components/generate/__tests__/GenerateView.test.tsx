@@ -54,7 +54,7 @@ describe("GenerateView", () => {
     fireEvent.click(screen.getByRole("button", { name: /Akceptuj/i }));
     fireEvent.click(screen.getByRole("button", { name: /Zapisz/i }));
 
-    await screen.findByText(/Generowanie nie powiodło się/i);
+    await screen.findByText(/Zapisanie nie powiodło się/i);
     fireEvent.click(screen.getByRole("button", { name: /Spróbuj ponownie/i }));
 
     await screen.findByText(/Przejrzyj fiszki/i);
@@ -79,11 +79,11 @@ describe("GenerateView", () => {
     fireEvent.click(screen.getByRole("button", { name: /Akceptuj/i }));
     fireEvent.click(screen.getByRole("button", { name: /Zapisz/i }));
 
-    await screen.findByText(/Generowanie nie powiodło się/i);
+    await screen.findByText(/Zapisanie nie powiodło się/i);
     fireEvent.click(screen.getByRole("button", { name: /Spróbuj ponownie/i }));
 
     await screen.findByText(/Zaakceptowano/i);
-    expect(screen.getByText(/Zapisz 1/i)).toBeDefined();
+    await screen.findByText(/Zapisz 1/i);
   });
 
   it("R2: shows error state when /batch-create returns 500, never enters success state", async () => {
@@ -106,7 +106,7 @@ describe("GenerateView", () => {
     fireEvent.click(screen.getByRole("button", { name: /Akceptuj/i }));
     fireEvent.click(screen.getByRole("button", { name: /Zapisz/i }));
 
-    await screen.findByText(/Generowanie nie powiodło się/i);
+    await screen.findByText(/Zapisanie nie powiodło się/i);
 
     expect(screen.queryByText(/Dodano/i)).toBeNull();
   });

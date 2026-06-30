@@ -1,8 +1,10 @@
+// @vitest-environment node
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("astro:middleware", () => ({ defineMiddleware: (fn: unknown) => fn }));
 vi.mock("@/lib/supabase", () => ({ createClient: vi.fn().mockReturnValue(null) }));
 
+import { createClient } from "@/lib/supabase";
 import { onRequest } from "../middleware";
 
 interface TestContext {
@@ -48,5 +50,20 @@ describe("middleware onRequest", () => {
     await handler(makeContext("/api/flashcards/generate"), next);
 
     expect(next).toHaveBeenCalled();
+  });
+
+  it("passes through authenticated request to protected route /generate", async () => {
+    const fakeUser = { id: "u1" };
+    vi.mocked(createClient).mockReturnValueOnce({
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: fakeUser } }) },
+    } as unknown as ReturnType<typeof createClient>);
+
+    const next = vi.fn().mockResolvedValue(new Response("ok", { status: 200 }));
+    const ctx = makeContext("/generate");
+
+    await handler(ctx, next);
+
+    expect(next).toHaveBeenCalled();
+    expect(ctx.locals.user).toEqual(fakeUser);
   });
 });

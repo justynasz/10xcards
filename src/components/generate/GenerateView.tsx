@@ -189,7 +189,9 @@ export function GenerateView() {
   return (
     <div className="mx-auto max-w-2xl space-y-4 p-6">
       <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-        <p className="text-sm font-medium text-red-700">Generowanie nie powiodło się</p>
+        <p className="text-sm font-medium text-red-700">
+          {errorSource === "save" ? "Zapisanie nie powiodło się" : "Generowanie nie powiodło się"}
+        </p>
         <p className="mt-1 text-sm text-red-600">{errorMessage}</p>
       </div>
       <Button onClick={handleRetry}>Spróbuj ponownie</Button>

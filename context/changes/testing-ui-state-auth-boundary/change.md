@@ -1,7 +1,7 @@
 ---
 change_id: testing-ui-state-auth-boundary
 title: Testing ui state auth boundary
-status: implemented
+status: impl_reviewed
 created: 2026-06-30
 updated: 2026-06-30
 archived_at: null
