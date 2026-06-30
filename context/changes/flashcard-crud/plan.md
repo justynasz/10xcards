@@ -347,30 +347,30 @@ See per-phase Manual Verification sections above.
 
 #### Automated
 
-- [x] 1.1 Type checking passes: `npm run build`
-- [x] 1.2 Linting passes: `npm run lint`
+- [x] 1.1 Type checking passes: `npm run build` — a309af0
+- [x] 1.2 Linting passes: `npm run lint` — a309af0
 
 #### Manual
 
-- [x] 1.3 `POST /api/flashcards` without auth → 401
-- [x] 1.4 `POST /api/flashcards` with auth and valid body → 201 with card
-- [x] 1.5 `PUT /api/flashcards/<id>` with auth → 200 with updated card
-- [x] 1.6 `DELETE /api/flashcards/<id>` with auth → 200 `{}`
+- [x] 1.3 `POST /api/flashcards` without auth → 401 — a309af0
+- [x] 1.4 `POST /api/flashcards` with auth and valid body → 201 with card — a309af0
+- [x] 1.5 `PUT /api/flashcards/<id>` with auth → 200 with updated card — a309af0
+- [x] 1.6 `DELETE /api/flashcards/<id>` with auth → 200 `{}` — a309af0
 
 ### Phase 2: FlashcardsListView UI — inline create, edit, delete
 
 #### Automated
 
-- [ ] 2.1 Type checking passes: `npm run build`
-- [ ] 2.2 Linting passes: `npm run lint`
+- [x] 2.1 Type checking passes: `npm run build`
+- [x] 2.2 Linting passes: `npm run lint`
 
 #### Manual
 
-- [ ] 2.3 Create form is visible at top of `/flashcards` after loading
-- [ ] 2.4 Creating a card adds it to the top of the list without reload
-- [ ] 2.5 Editing a card updates it in place without reload
-- [ ] 2.6 Cancelling edit restores original text
-- [ ] 2.7 Delete confirmation ("Na pewno?") appears; "Nie" cancels; "Tak" removes card
+- [x] 2.3 Create form is visible at top of `/flashcards` after loading
+- [x] 2.4 Creating a card adds it to the top of the list without reload
+- [x] 2.5 Editing a card updates it in place without reload
+- [x] 2.6 Cancelling edit restores original text
+- [x] 2.7 Delete confirmation ("Na pewno?") appears; "Nie" cancels; "Tak" removes card
 
 ### Phase 3: Unit Tests — error paths
 
