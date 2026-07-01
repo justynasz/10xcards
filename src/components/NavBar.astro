@@ -43,17 +43,26 @@ function isActive(href: string) {
           <>
             <span class="text-sm text-blue-100/70">{user.email}</span>
             <form method="POST" action="/api/auth/signout">
-              <button type="submit" class="text-sm text-purple-300 transition-colors hover:text-purple-100">
+              <button
+                type="submit"
+                class="cursor-pointer text-sm text-purple-300 transition-colors hover:text-purple-100"
+              >
                 Wyloguj
               </button>
             </form>
           </>
         ) : (
           <>
-            <a href="/auth/signin" class="text-sm text-purple-300 transition-colors hover:text-purple-100">
+            <a
+              href="/auth/signin"
+              class="cursor-pointer text-sm text-purple-300 transition-colors hover:text-purple-100"
+            >
               Zaloguj się
             </a>
-            <a href="/auth/signup" class="text-sm text-purple-300 transition-colors hover:text-purple-100">
+            <a
+              href="/auth/signup"
+              class="cursor-pointer text-sm text-purple-300 transition-colors hover:text-purple-100"
+            >
               Zarejestruj się
             </a>
           </>

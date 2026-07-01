@@ -6,24 +6,24 @@ const error = Astro.url.searchParams.get("error");
 const deleted = Astro.url.searchParams.get("deleted");
 ---
 
-<Layout title="Sign in">
+<Layout title="Logowanie">
   <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
     <div class="w-full max-w-sm rounded-2xl border border-white/10 bg-white/10 p-8 text-white backdrop-blur-xl">
       <h1
         class="mb-6 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-center text-2xl font-bold text-transparent"
       >
-        Sign in
+        Zaloguj się
       </h1>
       {
         deleted && (
           <p class="mb-4 rounded-lg border border-green-500/30 bg-green-900/30 px-3 py-2 text-sm text-green-300">
-            Your account has been deleted.
+            Twoje konto zostało usunięte.
           </p>
         )
       }
       <SignInForm serverError={error} client:load />
       <p class="mt-4 text-center text-sm text-blue-100/60">
-        Don't have an account? <a href="/auth/signup" class="text-purple-300 hover:underline">Sign up</a>
+        Nie masz konta? <a href="/auth/signup" class="text-purple-300 hover:underline">Zarejestruj się</a>
       </p>
     </div>
   </div>
