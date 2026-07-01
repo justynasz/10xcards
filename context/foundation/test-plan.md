@@ -426,6 +426,7 @@ Exclusions agreed during the rollout (Phase 2 interview, Q5).
 - Strategy (§1–§5) last reviewed: 2026-06-18
 - Stack versions last verified: 2026-06-18
 - AI-native tool references last verified: 2026-06-18
+- e2e stack facts (§4, §5, §7) last reviewed: 2026-07-01 (Playwright/CI reconciliation, `test-plan-refresh-2026-07-01`)
 
 Refresh (`/10x-test-plan --refresh`) when:
 

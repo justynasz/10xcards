@@ -227,19 +227,19 @@ The current §7 bullet justifies excluding full e2e coverage by citing tool abse
 
 #### Automated
 
-- [x] 3.1 `grep -q "### 6.7 Adding a Playwright e2e spec" context/foundation/test-plan.md`
-- [x] 3.2 `grep -q "pressSequentially" context/foundation/test-plan.md`
+- [x] 3.1 `grep -q "### 6.7 Adding a Playwright e2e spec" context/foundation/test-plan.md` — 9060df5
+- [x] 3.2 `grep -q "pressSequentially" context/foundation/test-plan.md` — 9060df5
 
 #### Manual
 
-- [x] 3.3 Subsection style matches §6.3/§6.4; decision rule is a stated rule, not vague guidance
+- [x] 3.3 Subsection style matches §6.3/§6.4; decision rule is a stated rule, not vague guidance — 9060df5
 
 ### Phase 4: Update §8 Freshness Ledger
 
 #### Automated
 
-- [ ] 4.1 `grep -q "test-plan-refresh-2026-07-01" context/foundation/test-plan.md`
+- [x] 4.1 `grep -q "test-plan-refresh-2026-07-01" context/foundation/test-plan.md`
 
 #### Manual
 
-- [ ] 4.2 Ledger line doesn't overstate scope
+- [x] 4.2 Ledger line doesn't overstate scope
