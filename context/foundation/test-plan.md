@@ -6,7 +6,7 @@
 >
 > Refresh: re-run `/10x-test-plan --refresh` when stale (see §8).
 >
-> Last updated: 2026-07-01 (Phases 1–3 complete; R7–R9 added; Phase 4 opened)
+> Last updated: 2026-07-01 (Phases 1–4 complete — rollout finished)
 
 ---
 
@@ -80,7 +80,7 @@ orchestrator updates Status as artifacts appear on disk.
 | 1 | Core-loop integrity | Udowodnić że FSRS nie korumpuje harmonogramu, batch-save nie milczy po błędzie, AI error dociera do UI | R1 ✓ (`testing-core-loop-integrity`, impl_reviewed), R2, R3 | unit (extend), integration (new) | complete | context/changes/testing-r2-r3-error-paths |
 | 2 | UI state + auth boundary | Udowodnić że GenerateView obsługuje błędy bez utraty kart; auth boundary trzyma się przy nowych trasach | R4, R5 | component tests (RTL), integration | complete | context/changes/testing-ui-state-auth-boundary |
 | 3 | Data isolation + quality gates | Udowodnić cross-user rejection (IDOR); zamknąć obowiązkowe CI gates | R6 | integration (IDOR), CI gate wiring | complete | context/changes/testing-data-isolation |
-| 4 | CRUD UI + SR session error paths | Udowodnić że FlashcardsListView nie milczy po błędzie API; SessionView wraca do użytecznego stanu po błędzie oceny; list/create routes mają testy 401 | R7, R8, R9 | component tests (RTL), API route unit tests | change opened | context/changes/testing-crud-sr-error-paths |
+| 4 | CRUD UI + SR session error paths | Udowodnić że FlashcardsListView nie milczy po błędzie API; SessionView wraca do użytecznego stanu po błędzie oceny; list/create routes mają testy 401 | R7, R8, R9 | component tests (RTL), API route unit tests | complete | context/changes/testing-crud-sr-error-paths |
 
 ---
 
