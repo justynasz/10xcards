@@ -199,10 +199,10 @@ Create `src/pages/api/flashcards/__tests__/list.test.ts` and `__tests__/index.te
 
 #### Automated
 
-- [x] 3.1 npm test passes — 5 new API route tests green (list: 2, index: 3)
-- [x] 3.2 npm run lint passes
-- [x] 3.3 Full suite: zero regressions in existing tests
+- [x] 3.1 npm test passes — 5 new API route tests green (list: 2, index: 3) — 5c9b93e
+- [x] 3.2 npm run lint passes — 5c9b93e
+- [x] 3.3 Full suite: zero regressions in existing tests — 5c9b93e
 
 #### Manual
 
-- [x] 3.4 Full suite run confirms no regressions
+- [x] 3.4 Full suite run confirms no regressions — 5c9b93e
