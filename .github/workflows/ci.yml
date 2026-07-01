@@ -24,6 +24,55 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
 
+  e2e:
+    needs: ci
+    runs-on: ubuntu-latest
+    # Non-blocking for now: requires SUPABASE_URL, SUPABASE_KEY, SUPABASE_SERVICE_ROLE_KEY,
+    # OPENROUTER_API_KEY, E2E_TEST_EMAIL, E2E_TEST_PASSWORD as repo secrets (dedicated test
+    # account — never real user credentials). Flip to blocking (add to deploy's `needs`) once
+    # this has run green for a while with real secrets configured.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Write .dev.vars for wrangler dev
+        run: |
+          cat > .dev.vars <<EOF
+          SUPABASE_URL=${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          OPENROUTER_API_KEY=${{ secrets.OPENROUTER_API_KEY }}
+          E2E_TEST_EMAIL=${{ secrets.E2E_TEST_EMAIL }}
+          E2E_TEST_PASSWORD=${{ secrets.E2E_TEST_PASSWORD }}
+          EOF
+      - name: Start wrangler dev
+        run: npx wrangler dev --port 8787 > wrangler-dev.log 2>&1 &
+      - name: Wait for server
+        run: |
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:8787/ && exit 0
+            sleep 2
+          done
+          echo "Server did not become ready in time" && exit 1
+      - run: npx playwright test
+      - name: Upload wrangler dev log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wrangler-dev-log
+          path: wrangler-dev.log
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+
   deploy:
     needs: ci
     runs-on: ubuntu-latest
