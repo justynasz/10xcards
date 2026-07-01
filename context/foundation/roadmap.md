@@ -3,7 +3,7 @@ project: "10xCards"
 version: 1
 status: draft
 created: 2026-05-27
-updated: 2026-06-18
+updated: 2026-07-01
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -36,7 +36,7 @@ S-01 to pierwsze wrota: udowadnia, że AI generuje użyteczne karty (riskiest as
 | F-01 | flashcard-data-schema   | (foundation) Tabela `flashcards` w Supabase z RLS; izolacja danych per user                             | —             | NFR (data isolation)                   | done     |
 | S-01 | ai-generate-and-review  | wkleić tekst, otrzymać karty AI, zaakceptować/edytować/odrzucić każdą, zapisać zaakceptowane do decku   | F-01          | FR-001, FR-003, FR-004, US-01          | done     |
 | S-02 | sr-review-session       | rozpocząć sesję powtarzania SR i ocenić recall każdej karty; app planuje kolejne powtórki automatycznie | S-01          | FR-009, FR-010                         | done     |
-| S-03 | manual-card-management  | tworzyć kartę ręcznie, przeglądać, edytować i usuwać karty ze swojego decku                             | F-01          | FR-002, FR-005, FR-006, FR-007, FR-008 | proposed |
+| S-03 | manual-card-management  | tworzyć kartę ręcznie, przeglądać, edytować i usuwać karty ze swojego decku                             | F-01          | FR-002, FR-005, FR-006, FR-007, FR-008 | done     |
 | S-04 | account-deletion        | usunąć konto i wszystkie swoje dane (RODO); app usuwa rekordy i sesję, a następnie wylogowuje           | F-01          | NFR (data isolation, RODO)             | done     |
 | S-05 | ux-improvements         | zbiorczo akceptować/odrzucać karty podczas przeglądu AI, resetować sesję przeglądu; widzieć stany ładowania w kluczowych akcjach | F-01 | FR-003, FR-004, FR-009 | done     |
 
@@ -115,7 +115,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Ręczne tworzenie kart to safety valve dla flow AI-only (Socrates na FR-005: "users won't adopt AI-only without the ability to correct or supplement it"). Przy celu `speed` i blokerze `time` — priorytyzuj za S-01, ale nie porzucaj: brak CRUD ręcznego blokuje zaufanie do produktu.
-- **Status:** proposed
+- **Status:** done
 
 ### S-04: Usuwanie konta (RODO)
 
@@ -173,3 +173,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **S-01: wkleić tekst, otrzymać karty AI, zaakceptować/edytować/odrzucić każdą, zapisać zaakceptowane do decku** — Archived 2026-06-17 → `context/archive/2026-06-16-ai-generate-and-review/`. Lesson: —.
 - **S-05: globalny NavBar, strona `/flashcards`, hero strony głównej, dashboard ze statystykami** — Archived 2026-06-18 → `context/archive/2026-06-18-ux-improvements/`. Lesson: —.
 - **S-02: user can rozpocząć sesję powtarzania spaced repetition; dla każdej karty ocenić recall (Again/Hard/Good/Easy); app wylicza następną datę powtórki algorytmem FSRS (via `ts-fsrs`) i zapisuje do Supabase.** — Archived 2026-06-18 → `context/archive/2026-06-17-sr-review-session/`. Lesson: —.
+- **S-03: user can tworzyć kartę ręcznie (pytanie + odpowiedź), przeglądać listę wszystkich swoich kart, edytować treść dowolnej karty i usuwać karty z decku.** — Zaimplementowane w ramach S-05 (UX improvements); `FlashcardsListView.tsx` + API routes (`list.ts`, `index.ts`, `[id].ts`). Status zaktualizowany 2026-07-01.
