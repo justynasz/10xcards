@@ -392,6 +392,22 @@ it("no API route imports createAdminClient", () => {
 
 (Fills in as phases ship.)
 
+### 6.7 Adding a Playwright e2e spec
+
+**Location**: `tests/<scenario>.spec.ts` — shared config at `playwright.config.ts` (chromium project only).
+
+**Auth**: reuse `storageState: "playwright/.auth/user.json"` via `test.use({...})` — do not re-implement login per spec. `tests/auth.setup.ts` runs once via the `setup` project dependency and persists the authenticated session for every other spec.
+
+**React 19 gotcha**: use `locator.pressSequentially(text)`, not `.fill(text)`, for controlled inputs — `fill()` sets the DOM value without reliably firing React's synthetic `onChange`, so controlled state never updates.
+
+**Mocking**: use `page.route("**/api/...", (route) => route.fulfill({...}))` for deterministic API responses instead of depending on real OpenRouter/Supabase state.
+
+**Locators**: `getByRole`/`getByText` matching the Polish UI copy actually rendered (not translated placeholders) — same locator-priority rule as the project-wide `getByRole`/`getByLabel`/`getByText` convention.
+
+**Reference tests**: [`tests/seed.spec.ts`](../../tests/seed.spec.ts), [`tests/batch-save-error.spec.ts`](../../tests/batch-save-error.spec.ts), [`tests/auth.setup.ts`](../../tests/auth.setup.ts)
+
+**Decision rule — when to add a new e2e spec**: Add a new e2e spec only when a risk needs full-stack signal that unit/integration/component tests cannot give cheaply — e.g., a real browser session crossing multiple routes, or a regression that only manifests through the actual `wrangler dev` runtime. If the risk can be proven at a cheaper layer (§6.1–§6.5), do that instead; e2e is the last resort, not the default, per §1 principle #1.
+
 ---
 
 ## 7. What We Deliberately Don't Test

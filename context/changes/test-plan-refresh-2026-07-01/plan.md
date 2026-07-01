@@ -217,22 +217,22 @@ The current §7 bullet justifies excluding full e2e coverage by citing tool abse
 
 #### Automated
 
-- [x] 2.1 `grep -q "brak frameworka Playwright" context/foundation/test-plan.md` returns no match
+- [x] 2.1 `grep -q "brak frameworka Playwright" context/foundation/test-plan.md` returns no match — 458301a
 
 #### Manual
 
-- [x] 2.2 Reframed bullet reads consistently with §7's list style
+- [x] 2.2 Reframed bullet reads consistently with §7's list style — 458301a
 
 ### Phase 3: Add §6.7 cookbook pattern for Playwright specs
 
 #### Automated
 
-- [ ] 3.1 `grep -q "### 6.7 Adding a Playwright e2e spec" context/foundation/test-plan.md`
-- [ ] 3.2 `grep -q "pressSequentially" context/foundation/test-plan.md`
+- [x] 3.1 `grep -q "### 6.7 Adding a Playwright e2e spec" context/foundation/test-plan.md`
+- [x] 3.2 `grep -q "pressSequentially" context/foundation/test-plan.md`
 
 #### Manual
 
-- [ ] 3.3 Subsection style matches §6.3/§6.4; decision rule is a stated rule, not vague guidance
+- [x] 3.3 Subsection style matches §6.3/§6.4; decision rule is a stated rule, not vague guidance
 
 ### Phase 4: Update §8 Freshness Ledger
 
