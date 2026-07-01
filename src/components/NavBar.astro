@@ -18,22 +18,24 @@ function isActive(href: string) {
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-8">
     <a href="/" class="text-lg font-bold text-white">10xCards</a>
 
-    <nav class="hidden items-center gap-6 sm:flex">
-      {
-        links.map((link) => (
-          <a
-            href={link.href}
-            aria-current={isActive(link.href) ? "page" : undefined}
-            class:list={[
-              "text-sm transition-colors",
-              isActive(link.href) ? "font-semibold text-white" : "text-blue-100/70 hover:text-white",
-            ]}
-          >
-            {link.label}
-          </a>
-        ))
-      }
-    </nav>
+    {
+      user && (
+        <nav class="hidden items-center gap-6 sm:flex">
+          {links.map((link) => (
+            <a
+              href={link.href}
+              aria-current={isActive(link.href) ? "page" : undefined}
+              class:list={[
+                "text-sm transition-colors",
+                isActive(link.href) ? "font-semibold text-white" : "text-blue-100/70 hover:text-white",
+              ]}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      )
+    }
 
     <div class="hidden items-center gap-3 sm:flex">
       {
@@ -64,23 +66,28 @@ function isActive(href: string) {
       <div
         class="absolute right-0 z-50 mt-2 w-56 space-y-3 rounded-xl border border-white/10 bg-[#0a0e1a] p-4 shadow-xl"
       >
-        <nav class="flex flex-col gap-3">
-          {
-            links.map((link) => (
-              <a
-                href={link.href}
-                aria-current={isActive(link.href) ? "page" : undefined}
-                class:list={[
-                  "text-sm transition-colors",
-                  isActive(link.href) ? "font-semibold text-white" : "text-blue-100/70 hover:text-white",
-                ]}
-              >
-                {link.label}
-              </a>
-            ))
-          }
-        </nav>
-        <hr class="border-white/10" />
+        {
+          user && (
+            <>
+              <nav class="flex flex-col gap-3">
+                {links.map((link) => (
+                  <a
+                    href={link.href}
+                    aria-current={isActive(link.href) ? "page" : undefined}
+                    class:list={[
+                      "text-sm transition-colors",
+                      isActive(link.href) ? "font-semibold text-white" : "text-blue-100/70 hover:text-white",
+                    ]}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+              <hr class="border-white/10" />
+            </>
+          )
+        }
+        {!user && <hr class="border-white/10" />}
         {
           user ? (
             <div class="flex flex-col gap-2">
