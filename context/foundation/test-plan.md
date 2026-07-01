@@ -94,7 +94,7 @@ The classic test base for this project. AI-native tools (if any) carry a
 | unit + integration | vitest | ^4.1.7 | configured via `package.json`; `npm test` runs once, `npm run test:watch` in dev |
 | component tests | @testing-library/react + @testing-library/user-event | installed in Phase 1 (testing-r2-r3-error-paths); see §3 Phase 1 for component test cookbook (§6.3) | needed for GenerateView state-machine tests; installed early to cover R2/R3 UI layer |
 | API/fetch mocking | vi.stubGlobal("fetch") | built-in vitest | current pattern in openrouter tests; sufficient for unit layer |
-| e2e | none yet | — | no Playwright/Cypress configured; not required for current risk map |
+| e2e | Playwright | ^1.61.0 (see package.json) | `playwright.config.ts` — chromium only, `storageState` auth via `tests/auth.setup.ts`; CI job `e2e` in `.github/workflows/ci.yml` blocks `deploy`; checked: 2026-07-01 |
 | accessibility | none | — | not in current risk map |
 
 **Stack grounding tools (current session):**
@@ -115,7 +115,7 @@ The full set of gates that must pass before a change reaches production.
 | unit tests | local + CI | required after §3 Phase 1 | logic regressions in service layer |
 | integration tests | local + CI | required after §3 Phase 1 | API route error paths, auth boundary |
 | component tests | local + CI | required after §3 Phase 2 | UI state machine regressions |
-| e2e on critical flows | — | not planned (no framework; add in future `--refresh` if risk map changes) | — |
+| e2e on critical flows | CI (`.github/workflows/ci.yml`, job `e2e`) | required (blocks `deploy`) | UI regressions the unit/component/integration layers can't reach — full-stack flow through a real `wrangler dev` server |
 | pre-prod smoke | manual | optional | environment-specific failures (Cloudflare Workers vs local) |
 
 ---
