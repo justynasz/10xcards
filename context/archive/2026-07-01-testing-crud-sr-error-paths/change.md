@@ -1,10 +1,10 @@
 ---
 change_id: testing-crud-sr-error-paths
 title: Testing CRUD UI and SR session error paths
-status: impl_reviewed
+status: archived
 created: 2026-07-01
 updated: 2026-07-01
-archived_at: null
+archived_at: 2026-07-01T10:51:17Z
 ---
 
 ## Notes
