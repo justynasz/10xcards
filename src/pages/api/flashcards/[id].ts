@@ -56,7 +56,7 @@ export const PUT: APIRoute = async (context) => {
   try {
     const card = await updateFlashcard(supabase, id, parsed.data);
     return Response.json({ card });
-  } catch (err) {
+  } catch (err: unknown) {
     // eslint-disable-next-line no-console
     console.error("[flashcards update] Supabase error:", err);
     return Response.json({ error: "Nie udało się zaktualizować fiszki." }, { status: 500 });
@@ -93,7 +93,7 @@ export const DELETE: APIRoute = async (context) => {
   try {
     await deleteFlashcard(supabase, id);
     return Response.json({});
-  } catch (err) {
+  } catch (err: unknown) {
     // eslint-disable-next-line no-console
     console.error("[flashcards delete] Supabase error:", err);
     return Response.json({ error: "Nie udało się usunąć fiszki." }, { status: 500 });
