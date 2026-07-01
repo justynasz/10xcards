@@ -6,7 +6,7 @@
 >
 > Refresh: re-run `/10x-test-plan --refresh` when stale (see §8).
 >
-> Last updated: 2026-06-19 (Phase 1 impl_reviewed; §6.1 + §6.2 filled in)
+> Last updated: 2026-07-01 (Phases 1–3 complete; R7–R9 added; Phase 4 opened)
 
 ---
 
@@ -49,6 +49,9 @@ research's job, see §1 principle #3).
 | R4 | **Regresja maszyny stanów GenerateView** — saving→error nie przywraca `review` state z zaakceptowanymi kartami; Retry resetuje accepted cards; licznik zaakceptowanych desynchronizuje się | Medium | Medium | Interview Q4 (nigdy nie testowane); S-01 archive plan (6-stanowa maszyna: idle→loading→review→saving→success/error); hot-spot dir `src/components/generate/` 3 commitów/30d |
 | R5 | **Auth boundary pominięty w nowej trasie** — S-03 doda nowe routes; jeśli developer nie doda do `PROTECTED_ROUTES`, niezalogowany user dociera do chronionych zasobów | High | Medium | CLAUDE.md architecture (PROTECTED_ROUTES ręcznie utrzymywane); hot-spot `src/middleware.ts` 5 zmian/30d; roadmap S-03 proposed |
 | R6 | **IDOR / cross-user data access** — API route przetwarza `cardId` należący do innego usera; Supabase RLS to jedyna warstwa izolacji; service-role client (użyty w S-04) bypassuje RLS gdy użyty przez pomyłkę | High | Low | PRD NFR "One user's flashcard data is never visible to another user"; S-02 archive plan (RLS as sole check); S-04 archive plan (service-role client istnieje w codebase); hot-spot dir `src/pages/api/flashcards/` 7 commitów/30d |
+| R7 | **Cichy błąd CRUD w FlashcardsListView** — POST `/api/flashcards` lub PUT `/api/flashcards/:id` zwraca błąd; FlashcardsListView pokazuje sukces lub milczy; użytkownik nie wie że ręcznie wpisana/edytowana karta nie została zapisana | Medium | Medium | Interview Q1 (wzorzec identyczny jak R2 — batch-save silence); S-03 archive (nowy komponent CRUD bez testów); FlashcardsListView.tsx brak jakichkolwiek testów |
+| R8 | **Błąd oceny SR freezuje SessionView** — `handleRate` łapie błąd POST `/api/flashcards/review` i przywraca stan `flipped` z `errorMessage`, ale brak testów weryfikujących ten flow; regresja = cicha failure lub UI freezuje, użytkownik traci postęp sesji | High | Medium | SessionView.tsx brak testów; maszyna stanów loading→session→flipped→saving→summary ma tę samą klasę ryzyka co R4 (GenerateView); user concern: "sesja SR powinna działać nawet po błędzie sieci" |
+| R9 | **Brak 401 dla list/create API routes** — GET `/api/flashcards/list` i POST `/api/flashcards` nie mają testów auth boundary; spójność z wzorcem R5 (przetestował middleware, nie konkretne trasy) | High | Low | R5 Response Guidance: "unit test każdego API route (brak user → 401)"; list.ts i index.ts dodane w S-03 po impl-review Phase 3 — nigdy nie przetestowane |
 
 ### Risk Response Guidance
 
@@ -60,6 +63,9 @@ research's job, see §1 principle #3).
 | R4 | Po błędzie batch-save GenerateView wraca do `review` state z zachowanymi zaakceptowanymi kartami; Retry nie resetuje accepted status; licznik "Save X cards" jest spójny przez cały cykl | "maszyna stanów wygląda ok w happy path" — saving→error może resetować cały stan komponentu | Jak `acceptedCards` jest zarządzane przez ViewState transitions; co się dzieje ze stanem po error; czy "Regenerate" czyści accepted cards | React unit test (vitest + RTL) z mock fetch dla error scenarios | Snapshot HTML — zmienia się, nie łapie logiki stanów |
 | R5 | Request bez ważnego session cookie do dowolnego API route lub strony Astro dostaje redirect lub 401 — w tym nowych tras z S-03 | "PROTECTED_ROUTES zawiera /generate i /review = wszystko chronione" — API routes mają też własny auth guard; który jest load-bearing | Czy middleware to jedyna warstwa czy API routes też niezależnie sprawdzają auth; jak middleware reaguje na trasy spoza PROTECTED_ROUTES | Integration test middleware (brak sesji → redirect) + unit test każdego API route (brak user → 401) | Testować tylko że istniejące chronione trasy działają — bez testu mechanizmu dla przyszłych tras |
 | R6 | Request z sesją usera A dla cardId usera B dostaje 404 lub 403 — nie dane karty B | "Supabase RLS zapewnia izolację" — jeśli service-role client użyty przez pomyłkę, RLS bypassowany | Który Supabase client (anon vs service-role) używany w każdym API route; czy jest app-level ownership check oprócz RLS | Integration test z dwoma mock users — cross-user cardId zwraca 403/404 | Testować tylko że owner dostaje 200 bez testowania odrzucenia cross-user request |
+| R7 | Gdy POST/PUT zwraca błąd, FlashcardsListView wyświetla komunikat i NIE przełącza się w success state; edytowany tekst jest zachowany | "komponent wygląda ok w happy path" — czy error branch z non-2xx fetch aktualizuje stan UI czy go resetuje | Jak FlashcardsListView zarządza stanem `isSubmitting`/`error` przez cykl request; czy edytowany tekst jest przechowywany w stanie oddzielnym od server response | Component test (RTL) z mock fetch 500 — UI pokazuje błąd; tekst pola zachowany | Testować tylko happy path (201/200) — bug pattern to właśnie cicha failure path |
+| R8 | Po błędzie POST `/api/flashcards/review`, SessionView wraca do `flipped` state i pokazuje `errorMessage` — sesja nie freezuje, ocena może być ponowiona | "handleRate łapie błąd catch = jest obsłużony" — czy `setViewState("flipped")` faktycznie odwraca stan, czy komponent utknął na `saving` | Jak `viewState` przechodzi przez `flipped → saving → flipped(error)` w SessionView; czy errorMessage jest widoczny w DOM po catch | Component test (RTL) z mock fetch 500 dla POST review — viewState = flipped, errorMessage widoczny | Testować tylko że catch istnieje bez weryfikacji że UI rzeczywiście wraca do użytecznego stanu |
+| R9 | Request bez użytkownika do GET `/api/flashcards/list` i POST `/api/flashcards` dostaje 401 | "middleware chroni trasy = API routes też bezpieczne" — API routes mogą mieć własny auth check niezależny od middleware | Czy list.ts i index.ts sprawdzają `context.locals.user` niezależnie; co zwracają gdy `user === null` | API route unit test (brak user → 401) dla list.ts i index.ts — spójnie z wzorcem z §6.4 | Zakładać że middleware test (Phase 2) obejmuje też konkretne trasy — każda trasa musi być przetestowana osobno |
 
 ---
 
@@ -71,9 +77,10 @@ orchestrator updates Status as artifacts appear on disk.
 
 | # | Phase name | Goal (one line) | Risks covered | Test types | Status | Change folder |
 |---|------------|-----------------|---------------|------------|--------|---------------|
-| 1 | Core-loop integrity | Udowodnić że FSRS nie korumpuje harmonogramu, batch-save nie milczy po błędzie, AI error dociera do UI | R1 ✓ (`testing-core-loop-integrity`, impl_reviewed), R2, R3 | unit (extend), integration (new) | change opened | context/changes/testing-r2-r3-error-paths |
-| 2 | UI state + auth boundary | Udowodnić że GenerateView obsługuje błędy bez utraty kart; auth boundary trzyma się przy nowych trasach | R4, R5 | component tests (RTL), integration | change opened | context/changes/testing-ui-state-auth-boundary |
-| 3 | Data isolation + quality gates | Udowodnić cross-user rejection (IDOR); zamknąć obowiązkowe CI gates | R6 | integration (IDOR), CI gate wiring | change opened | context/changes/testing-data-isolation |
+| 1 | Core-loop integrity | Udowodnić że FSRS nie korumpuje harmonogramu, batch-save nie milczy po błędzie, AI error dociera do UI | R1 ✓ (`testing-core-loop-integrity`, impl_reviewed), R2, R3 | unit (extend), integration (new) | complete | context/changes/testing-r2-r3-error-paths |
+| 2 | UI state + auth boundary | Udowodnić że GenerateView obsługuje błędy bez utraty kart; auth boundary trzyma się przy nowych trasach | R4, R5 | component tests (RTL), integration | complete | context/changes/testing-ui-state-auth-boundary |
+| 3 | Data isolation + quality gates | Udowodnić cross-user rejection (IDOR); zamknąć obowiązkowe CI gates | R6 | integration (IDOR), CI gate wiring | complete | context/changes/testing-data-isolation |
+| 4 | CRUD UI + SR session error paths | Udowodnić że FlashcardsListView nie milczy po błędzie API; SessionView wraca do użytecznego stanu po błędzie oceny; list/create routes mają testy 401 | R7, R8, R9 | component tests (RTL), API route unit tests | change opened | context/changes/testing-crud-sr-error-paths |
 
 ---
 
