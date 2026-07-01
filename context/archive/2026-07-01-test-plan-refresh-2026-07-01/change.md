@@ -1,10 +1,10 @@
 ---
 change_id: test-plan-refresh-2026-07-01
 title: Reconcile test-plan.md with Playwright e2e added outside the rollout process
-status: implemented
+status: archived
 created: 2026-07-01
 updated: 2026-07-01
-archived_at: null
+archived_at: 2026-07-01T14:22:02Z
 ---
 
 ## Notes
