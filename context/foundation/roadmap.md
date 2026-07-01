@@ -166,6 +166,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Aplikacja mobilna** — Why parked: PRD §Non-Goals. Web only; native iOS/Android po walidacji produktu webowego.
 - **Integracje z zewnętrznymi platformami (Anki sync, LMS)** — Why parked: PRD §Non-Goals. Poza zakresem MVP.
 - **Observability (logging, error tracking, metryki)** — Why parked: cel `speed`; baseline absent; dodaj po launch gdy są realne dane do debugowania i pierwsze incydenty produkcyjne.
+- **OAuth (logowanie przez zewnętrznych providerów)** — Why parked: PRD §Access Control wspomina OAuth jako opcję obok email+password, ale nigdy nie doprecyzowano providerów (OQ-3, block: no) i nikt nie zaimplementował tego w kodzie. Email+password wystarcza dla walidacji core loop przy celu `speed`; dodaj jako osobny slice, jeśli pojawi się realny popyt użytkowników po MVP.
 
 ## Done
 
