@@ -1,10 +1,10 @@
 ---
 id: account-deletion
 title: "Account deletion"
-status: implemented
+status: impl_reviewed
 roadmap_id: null
 created: 2026-06-18
-updated: 2026-06-18
+updated: 2026-07-01
 ---
 
 # Account deletion
