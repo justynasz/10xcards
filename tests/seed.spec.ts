@@ -15,7 +15,9 @@ test("generate flashcards from text (risk: AI generation failure)", async ({ pag
     name: /wklej tekst/i,
   });
 
-  await input.fill("E2E test content for flashcards generation. This is long enough to pass validation.");
+  // React 19 controlled textarea: fill() nie triggeruje onChange → użyj pressSequentially
+  await input.click();
+  await input.pressSequentially("E2E test content for flashcards generation. This is long enough to pass validation.");
 
   await expect(page.getByText(/brakuje jeszcze/i)).toBeHidden();
 

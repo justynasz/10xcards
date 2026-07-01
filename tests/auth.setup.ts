@@ -16,7 +16,7 @@ test("login", async ({ page }) => {
   await passwordInput.pressSequentially("Test123!");
   await expect(passwordInput).toHaveValue("Test123!");
 
-  await page.getByRole("button", { name: "Sign in" }).click();
+  await page.getByRole("button", { name: "Zaloguj się" }).click();
 
   // Poczekaj aż opuścimy stronę logowania — session cookie dostępne po redirect
   await page.waitForURL((url) => !url.pathname.startsWith("/auth"));
