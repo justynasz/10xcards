@@ -117,10 +117,10 @@ export function SessionView() {
         <div className="rounded-lg border border-gray-200 p-4 text-left">
           <p className="mb-2 text-sm font-medium text-gray-700">Rozkład ocen:</p>
           <div className="grid grid-cols-2 gap-2 text-sm">
-            <span className="text-red-600">Jeszcze raz: {results.again}</span>
-            <span className="text-orange-500">Trudno: {results.hard}</span>
-            <span className="text-green-600">Dobrze: {results.good}</span>
-            <span className="text-blue-600">Łatwo: {results.easy}</span>
+            <span className="text-red-600">Nie umiem: {results.again}</span>
+            <span className="text-orange-500">Raczej nie umiem: {results.hard}</span>
+            <span className="text-green-600">Raczej umiem: {results.good}</span>
+            <span className="text-blue-600">Umiem: {results.easy}</span>
           </div>
         </div>
         <Button asChild>
@@ -169,10 +169,10 @@ export function SessionView() {
         <div className="grid grid-cols-4 gap-2">
           {(["Again", "Hard", "Good", "Easy"] as SRRating[]).map((rating) => {
             const labels: Record<SRRating, string> = {
-              Again: "Jeszcze raz",
-              Hard: "Trudno",
-              Good: "Dobrze",
-              Easy: "Łatwo",
+              Again: "Nie umiem",
+              Hard: "Raczej nie umiem",
+              Good: "Raczej umiem",
+              Easy: "Umiem",
             };
             return (
               <Button
