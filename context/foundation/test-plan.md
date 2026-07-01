@@ -401,7 +401,7 @@ Exclusions agreed during the rollout (Phase 2 interview, Q5).
 - **Marketing / landing pages** — zmieniają się co tydzień; snapshot tests generują false-positive failures bez wartościowego sygnału. Re-evaluate if marketing pages start carrying business logic. (Source: interview Q5.)
 - **TypeScript type assertions** — kompilator (tsc via `npm run lint`) już to sprawdza; powielenie w testach jest implementation mirror. (Source: stack conventions, §1 principle #1.)
 - **Reliability zewnętrznych serwisów** — dostępność Supabase, OpenRouter, Cloudflare Workers — to należy do observability/alerting (celowo odroczone per roadmap Parked). (Source: roadmap Parked section.)
-- **Full e2e per każdy flow UI** — brak frameworka Playwright; koszt × signal nie uzasadnia instalacji dla obecnego risk map. Dodać w `--refresh` jeśli pojawi się nowy High×High risk wymagający end-to-end. (Source: §1 principle #1.)
+- **Full e2e per każdy flow UI** — Playwright jest zainstalowany i wpięty w CI (§4, §5) od 2026-07-01, ale to nie znaczy że każdy flow potrzebuje e2e. Obecne specy (`seed.spec.ts`, `batch-save-error.spec.ts`) celują w R2 na poziomie e2e jako uzupełnienie warstwy unit/component — nie duplikują całego risk mapu. Dodawaj nowy e2e spec tylko gdy pojawi się nowy High×High risk, dla którego niższa warstwa (unit/integration/component) nie daje wystarczającego sygnału — patrz §6.7 dla reguły decyzyjnej. (Source: §1 principle #1; zaktualizowano 2026-07-01.)
 
 ---
 

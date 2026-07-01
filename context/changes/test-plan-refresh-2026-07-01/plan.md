@@ -206,22 +206,22 @@ The current §7 bullet justifies excluding full e2e coverage by citing tool abse
 
 #### Automated
 
-- [x] 1.1 `grep -q "playwright" context/foundation/test-plan.md` matches in §4
-- [x] 1.2 `grep -q "blocks \`deploy\`" context/foundation/test-plan.md` matches in §5
+- [x] 1.1 `grep -q "playwright" context/foundation/test-plan.md` matches in §4 — 215d263
+- [x] 1.2 `grep -q "blocks \`deploy\`" context/foundation/test-plan.md` matches in §5 — 215d263
 
 #### Manual
 
-- [x] 1.3 Both rows read correctly in context (table formatting intact)
+- [x] 1.3 Both rows read correctly in context (table formatting intact) — 215d263
 
 ### Phase 2: Reframe §7 What We Deliberately Don't Test
 
 #### Automated
 
-- [ ] 2.1 `grep -q "brak frameworka Playwright" context/foundation/test-plan.md` returns no match
+- [x] 2.1 `grep -q "brak frameworka Playwright" context/foundation/test-plan.md` returns no match
 
 #### Manual
 
-- [ ] 2.2 Reframed bullet reads consistently with §7's list style
+- [x] 2.2 Reframed bullet reads consistently with §7's list style
 
 ### Phase 3: Add §6.7 cookbook pattern for Playwright specs
 
