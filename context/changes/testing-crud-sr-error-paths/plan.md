@@ -177,23 +177,23 @@ Create `src/pages/api/flashcards/__tests__/list.test.ts` and `__tests__/index.te
 
 #### Automated
 
-- [x] 1.1 npm test passes — 3 new FlashcardsListView tests green
-- [x] 1.2 npm run lint passes
+- [x] 1.1 npm test passes — 3 new FlashcardsListView tests green — 037a442
+- [x] 1.2 npm run lint passes — 037a442
 
 #### Manual
 
-- [x] 1.3 Test names clearly map to R7a / R7b / R7c
+- [x] 1.3 Test names clearly map to R7a / R7b / R7c — 037a442
 
 ### Phase 2: SessionView component tests (R8)
 
 #### Automated
 
-- [ ] 2.1 npm test passes — 2 new SessionView tests green
-- [ ] 2.2 npm run lint passes
+- [x] 2.1 npm test passes — 2 new SessionView tests green
+- [x] 2.2 npm run lint passes
 
 #### Manual
 
-- [ ] 2.3 Test names clearly map to R8a (load error) / R8b (handleRate error)
+- [x] 2.3 Test names clearly map to R8a (load error) / R8b (handleRate error)
 
 ### Phase 3: API route unit tests (R9)
 
