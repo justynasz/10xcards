@@ -55,8 +55,8 @@ describe("FlashcardsListView", () => {
 
     await screen.findByRole("alert");
 
-    expect(screen.getByLabelText(/Przód/i).value).toBe("My Question");
-    expect(screen.getByLabelText(/Tył/i).value).toBe("My Answer");
+    expect(screen.getByLabelText<HTMLInputElement>(/Przód/i).value).toBe("My Question");
+    expect(screen.getByLabelText<HTMLInputElement>(/Tył/i).value).toBe("My Answer");
   });
 
   it("R7b: edit error — shows alert, edit fields preserved", async () => {

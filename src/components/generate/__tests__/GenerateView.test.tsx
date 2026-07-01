@@ -28,7 +28,7 @@ describe("GenerateView", () => {
     render(<GenerateView />);
 
     fireEvent.change(screen.getByRole("textbox"), { target: { value: ENOUGH_TEXT } });
-    expect(screen.getByRole("button", { name: /Generuj fiszki/i }).disabled).toBe(false);
+    expect(screen.getByRole<HTMLButtonElement>("button", { name: /Generuj fiszki/i }).disabled).toBe(false);
     fireEvent.click(screen.getByRole("button", { name: /Generuj fiszki/i }));
 
     await screen.findByText(/Generowanie nie powiodło się/i);
@@ -98,7 +98,7 @@ describe("GenerateView", () => {
     render(<GenerateView />);
 
     fireEvent.change(screen.getByRole("textbox"), { target: { value: ENOUGH_TEXT } });
-    expect(screen.getByRole("button", { name: /Generuj fiszki/i }).disabled).toBe(false);
+    expect(screen.getByRole<HTMLButtonElement>("button", { name: /Generuj fiszki/i }).disabled).toBe(false);
     fireEvent.click(screen.getByRole("button", { name: /Generuj fiszki/i }));
 
     await screen.findByText(/Przejrzyj fiszki/i);
