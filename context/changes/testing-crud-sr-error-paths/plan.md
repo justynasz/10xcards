@@ -188,21 +188,21 @@ Create `src/pages/api/flashcards/__tests__/list.test.ts` and `__tests__/index.te
 
 #### Automated
 
-- [x] 2.1 npm test passes — 2 new SessionView tests green
-- [x] 2.2 npm run lint passes
+- [x] 2.1 npm test passes — 2 new SessionView tests green — 2719dfe
+- [x] 2.2 npm run lint passes — 2719dfe
 
 #### Manual
 
-- [x] 2.3 Test names clearly map to R8a (load error) / R8b (handleRate error)
+- [x] 2.3 Test names clearly map to R8a (load error) / R8b (handleRate error) — 2719dfe
 
 ### Phase 3: API route unit tests (R9)
 
 #### Automated
 
-- [ ] 3.1 npm test passes — 5 new API route tests green (list: 2, index: 3)
-- [ ] 3.2 npm run lint passes
-- [ ] 3.3 Full suite: zero regressions in existing tests
+- [x] 3.1 npm test passes — 5 new API route tests green (list: 2, index: 3)
+- [x] 3.2 npm run lint passes
+- [x] 3.3 Full suite: zero regressions in existing tests
 
 #### Manual
 
-- [ ] 3.4 Full suite run confirms no regressions
+- [x] 3.4 Full suite run confirms no regressions
