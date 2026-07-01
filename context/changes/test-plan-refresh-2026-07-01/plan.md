@@ -238,8 +238,8 @@ The current §7 bullet justifies excluding full e2e coverage by citing tool abse
 
 #### Automated
 
-- [x] 4.1 `grep -q "test-plan-refresh-2026-07-01" context/foundation/test-plan.md`
+- [x] 4.1 `grep -q "test-plan-refresh-2026-07-01" context/foundation/test-plan.md` — ee77f38
 
 #### Manual
 
-- [x] 4.2 Ledger line doesn't overstate scope
+- [x] 4.2 Ledger line doesn't overstate scope — ee77f38
