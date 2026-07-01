@@ -50,6 +50,11 @@ jobs:
           E2E_TEST_EMAIL=${{ secrets.E2E_TEST_EMAIL }}
           E2E_TEST_PASSWORD=${{ secrets.E2E_TEST_PASSWORD }}
           EOF
+      - name: Build (wrangler dev needs a built worker entry-point)
+        run: npm run build
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
       - name: Start wrangler dev
         run: npx wrangler dev --port 8787 > wrangler-dev.log 2>&1 &
       - name: Wait for server
